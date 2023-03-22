@@ -56,10 +56,6 @@ typedef struct {
 
 #define EXTI_EDGE_RISING	0
 #define EXTI_EDGE_FALLING	1
-static void EXTIx_EdgeCONFIG(uint8_t EXTIx,uint8_t EDGEx)
-{
-
-}
 
 
 extern uint8_t EXTIx_IRQx_MAPPING[];

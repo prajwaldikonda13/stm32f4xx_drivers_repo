@@ -1,0 +1,77 @@
+12:21:23 **** Incremental Build of configuration Debug for project stm32f4xx_drivers ****
+make all 
+arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -c -x assembler-with-cpp -MMD -MP -MF"startup/startup_stm32.d" -MT"startup/startup_stm32.o"  -mfloat-abi=soft -mthumb -o "startup/startup_stm32.o" "../startup/startup_stm32.s"
+arm-none-eabi-gcc "../src/005button_interrupt.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"src/005button_interrupt.d" -MT"src/005button_interrupt.o"  -mfloat-abi=soft -mthumb -o "src/005button_interrupt.o"
+arm-none-eabi-gcc "../drivers/src/stm32f407xx.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx.d" -MT"drivers/src/stm32f407xx.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx.o"
+arm-none-eabi-gcc "../drivers/src/stm32f407xx_exti_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_exti_driver.d" -MT"drivers/src/stm32f407xx_exti_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_exti_driver.o"
+arm-none-eabi-gcc "../drivers/src/stm32f407xx_gpio_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_gpio_driver.d" -MT"drivers/src/stm32f407xx_gpio_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_gpio_driver.o"
+arm-none-eabi-gcc "../drivers/src/stm32f407xx_i2c_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_i2c_driver.d" -MT"drivers/src/stm32f407xx_i2c_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_i2c_driver.o"
+../drivers/src/stm32f407xx_i2c_driver.c: In function 'I2C_PeriClockControl':
+../drivers/src/stm32f407xx_i2c_driver.c:154:12: warning: comparison between pointer and integer
+  154 |   if(pI2Cx == I2C1)
+      |            ^~
+../drivers/src/stm32f407xx_i2c_driver.c:157:19: warning: comparison between pointer and integer
+  157 |   }else if (pI2Cx == I2C2)
+      |                   ^~
+../drivers/src/stm32f407xx_i2c_driver.c:160:19: warning: comparison between pointer and integer
+  160 |   }else if (pI2Cx == I2C3)
+      |                   ^~
+../drivers/src/stm32f407xx_i2c_driver.c: In function 'I2C_IRQPriorityConfig':
+../drivers/src/stm32f407xx_i2c_driver.c:499:10: warning: unused variable 'iprx_section' [-Wunused-variable]
+  499 |  uint8_t iprx_section  = IRQNumber %4 ;
+      |          ^~~~~~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:498:10: warning: unused variable 'iprx' [-Wunused-variable]
+  498 |  uint8_t iprx = IRQNumber / 4;
+      |          ^~~~
+arm-none-eabi-gcc "../drivers/src/stm32f407xx_nvic_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_nvic_driver.d" -MT"drivers/src/stm32f407xx_nvic_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_nvic_driver.o"
+arm-none-eabi-gcc "../drivers/src/stm32f407xx_rcc_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_rcc_driver.d" -MT"drivers/src/stm32f407xx_rcc_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_rcc_driver.o"
+arm-none-eabi-gcc "../drivers/src/stm32f407xx_spi_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_spi_driver.d" -MT"drivers/src/stm32f407xx_spi_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_spi_driver.o"
+arm-none-eabi-gcc "../drivers/src/stm32f407xx_usart_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_usart_driver.d" -MT"drivers/src/stm32f407xx_usart_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_usart_driver.o"
+../drivers/src/stm32f407xx_usart_driver.c: In function 'USART_SetBaudRate':
+../drivers/src/stm32f407xx_usart_driver.c:33:14: warning: comparison between pointer and integer
+   33 |   if(pUSARTx == USART1 || pUSARTx == USART6)
+      |              ^~
+../drivers/src/stm32f407xx_usart_driver.c:33:35: warning: comparison between pointer and integer
+   33 |   if(pUSARTx == USART1 || pUSARTx == USART6)
+      |                                   ^~
+../drivers/src/stm32f407xx_usart_driver.c: In function 'USART_PeriClockControl':
+../drivers/src/stm32f407xx_usart_driver.c:242:14: warning: comparison between pointer and integer
+  242 |   if(pUSARTx == USART1)
+      |              ^~
+../drivers/src/stm32f407xx_usart_driver.c:245:21: warning: comparison between pointer and integer
+  245 |   }else if (pUSARTx == USART2)
+      |                     ^~
+../drivers/src/stm32f407xx_usart_driver.c:248:21: warning: comparison between pointer and integer
+  248 |   }else if (pUSARTx == USART3)
+      |                     ^~
+../drivers/src/stm32f407xx_usart_driver.c:252:20: warning: comparison between pointer and integer
+  252 |   else if (pUSARTx == UART4)
+      |                    ^~
+../drivers/src/stm32f407xx_usart_driver.c: In function 'USART_IRQPriorityConfig':
+../drivers/src/stm32f407xx_usart_driver.c:594:10: warning: unused variable 'iprx_section' [-Wunused-variable]
+  594 |  uint8_t iprx_section  = IRQNumber %4 ;
+      |          ^~~~~~~~~~~~
+../drivers/src/stm32f407xx_usart_driver.c:593:10: warning: unused variable 'iprx' [-Wunused-variable]
+  593 |  uint8_t iprx = IRQNumber / 4;
+      |          ^~~~
+../drivers/src/stm32f407xx_usart_driver.c: In function 'USART_IRQHandling':
+../drivers/src/stm32f407xx_usart_driver.c:619:26: warning: variable 'temp3' set but not used [-Wunused-but-set-variable]
+  619 |  uint32_t temp1 , temp2, temp3;
+      |                          ^~~~~
+arm-none-eabi-gcc -o "stm32f4xx_drivers.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Prajwal Dikonda\Desktop\STM32 Projects\stm32f4xx_drivers\LinkerScript.ld" -Wl,-Map="stm32f4xx_drivers.map" -Wl,--gc-sections -static -specs=rdimon.specs -lc -lrdimon  -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: stm32f4xx_drivers.elf
+ 
+arm-none-eabi-size   stm32f4xx_drivers.elf 
+   text	   data	    bss	    dec	    hex	filename
+   2448	   1600	   1060	   5108	   13f4	stm32f4xx_drivers.elf
+Finished building: default.size.stdout
+ 
+arm-none-eabi-objdump -h -S  stm32f4xx_drivers.elf  > "stm32f4xx_drivers.list"
+Finished building: stm32f4xx_drivers.list
+ 
+arm-none-eabi-objcopy  -O binary  stm32f4xx_drivers.elf  "stm32f4xx_drivers.bin"
+Finished building: stm32f4xx_drivers.bin
+ 
+
+12:21:25 Build Finished. 0 errors, 14 warnings. (took 2s.9ms)
+

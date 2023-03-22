@@ -1,4 +1,3 @@
-C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_exti_driver.h:59:13:EXTIx_EdgeCONFIG	16	static
 ../drivers/src/stm32f407xx_gpio_driver.c:5:6:GPIO_Init	16	static
 ../drivers/src/stm32f407xx_gpio_driver.c:88:6:GPIO_DeInit	16	static
 ../drivers/src/stm32f407xx_gpio_driver.c:106:9:GPIO_ReadFromInputPin	16	static

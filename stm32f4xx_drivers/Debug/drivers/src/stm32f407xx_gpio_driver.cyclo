@@ -1,4 +1,3 @@
-stm32f407xx_exti_driver.h:59:13:EXTIx_EdgeCONFIG	1
 stm32f407xx_gpio_driver.c:5:6:GPIO_Init	6
 stm32f407xx_gpio_driver.c:88:6:GPIO_DeInit	1
 stm32f407xx_gpio_driver.c:106:9:GPIO_ReadFromInputPin	1
