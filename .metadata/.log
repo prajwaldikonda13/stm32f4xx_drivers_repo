@@ -1,0 +1,19 @@
+!SESSION 2023-03-22 11:30:24.283 -----------------------------------------------
+eclipse.buildId=Version 1.12.0
+java.version=11.0.17
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  C:\Users\Prajwal Dikonda\Desktop\STM32 Projects\stm32f4xx_drivers\.project
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 C:\Users\Prajwal Dikonda\Desktop\STM32 Projects\stm32f4xx_drivers\.project
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2023-03-22 11:30:44.167
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2023-03-22 11:30:44.172
+!MESSAGE Log4j2 initialized with config file C:\Users\Prajwal Dikonda\Desktop\STM32 Projects\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2023-03-22 11:30:53.575
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2023-03-22 11:30:57.851
+!MESSAGE Indexed 'stm32f4xx_drivers' (9 sources, 29 headers) in 1.49 sec: 1,335 declarations; 3,480 references; 1 unresolved inclusions; 0 syntax errors; 371 unresolved names (7.2%)

@@ -1,0 +1,2 @@
+../drivers/src/stm32f407xx_nvic_driver.c:3:6:NVIC_INTR_CTRL	24	static
+../drivers/src/stm32f407xx_nvic_driver.c:8:6:NVIC_INTR_PR_CTRL	16	static

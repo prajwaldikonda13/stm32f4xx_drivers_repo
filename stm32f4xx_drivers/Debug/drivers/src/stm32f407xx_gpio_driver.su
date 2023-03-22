@@ -1,0 +1,11 @@
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_exti_driver.h:59:13:EXTIx_EdgeCONFIG	16	static
+../drivers/src/stm32f407xx_gpio_driver.c:5:6:GPIO_Init	16	static
+../drivers/src/stm32f407xx_gpio_driver.c:88:6:GPIO_DeInit	16	static
+../drivers/src/stm32f407xx_gpio_driver.c:106:9:GPIO_ReadFromInputPin	16	static
+../drivers/src/stm32f407xx_gpio_driver.c:124:10:GPIO_ReadFromInputPort	16	static
+../drivers/src/stm32f407xx_gpio_driver.c:142:6:GPIO_WriteToOutputPin	16	static
+../drivers/src/stm32f407xx_gpio_driver.c:160:6:GPIO_WriteToOutputPort	16	static
+../drivers/src/stm32f407xx_gpio_driver.c:178:6:GPIO_ToggleOutputPin	16	static
+../drivers/src/stm32f407xx_gpio_driver.c:196:6:GPIO_IRQInterruptConfig	16	static
+../drivers/src/stm32f407xx_gpio_driver.c:214:6:GPIO_IRQPriorityConfig	16	static
+../drivers/src/stm32f407xx_gpio_driver.c:231:6:GPIO_IRQHandling	16	static
