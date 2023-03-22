@@ -10,6 +10,9 @@
 
 #include "stm32f407xx.h"
 #include"stm32f407xx_rcc_driver.h"
+
+
+#define I2Cx_ptr(I2Cx)			((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
 /*
  * Clock Enable Macros for I2Cx peripherals
  */
@@ -35,7 +38,7 @@ typedef struct
  */
 typedef struct
 {
-	I2C_RegDef_t 	*pI2Cx;
+	uint8_t 	I2Cx;
 	I2C_Config_t 	I2C_Config;
 	uint8_t 		*pTxBuffer; /* !< To store the app. Tx buffer address > */
 	uint8_t 		*pRxBuffer;	/* !< To store the app. Rx buffer address > */
@@ -118,52 +121,52 @@ typedef struct
 /*
  * Peripheral Clock setup
  */
-void I2C_PeriClockControl(I2C_RegDef_t *pI2Cx, uint8_t EnorDi);
+void I2C_PeriClockControl(uint8_t I2Cx, uint8_t EnorDi);
 
 /*
  * Init and De-init
  */
-void I2C_Init(I2C_Handle_t *pI2CHandle);
-void I2C_DeInit(I2C_RegDef_t *pI2Cx);
+void I2C_Init(I2C_Handle_t I2CHandle);
+void I2C_DeInit(uint8_t I2Cx);
 
 
 /*
  * Data Send and Receive
  */
-void I2C_MasterSendData(I2C_Handle_t *pI2CHandle,uint8_t *pTxbuffer, uint32_t Len, uint8_t SlaveAddr,uint8_t Sr);
-void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle,uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr,uint8_t Sr);
-uint8_t I2C_MasterSendDataIT(I2C_Handle_t *pI2CHandle,uint8_t *pTxbuffer, uint32_t Len, uint8_t SlaveAddr,uint8_t Sr);
-uint8_t I2C_MasterReceiveDataIT(I2C_Handle_t *pI2CHandle,uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr,uint8_t Sr);
+void I2C_MasterSendData(I2C_Handle_t I2CHandle,uint8_t *pTxbuffer, uint32_t Len, uint8_t SlaveAddr,uint8_t Sr);
+void I2C_MasterReceiveData(I2C_Handle_t I2CHandle,uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr,uint8_t Sr);
+uint8_t I2C_MasterSendDataIT(I2C_Handle_t I2CHandle,uint8_t *pTxbuffer, uint32_t Len, uint8_t SlaveAddr,uint8_t Sr);
+uint8_t I2C_MasterReceiveDataIT(I2C_Handle_t I2CHandle,uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr,uint8_t Sr);
 
-void I2C_CloseReceiveData(I2C_Handle_t *pI2CHandle);
-void I2C_CloseSendData(I2C_Handle_t *pI2CHandle);
+void I2C_CloseReceiveData(I2C_Handle_t I2CHandle);
+void I2C_CloseSendData(I2C_Handle_t I2CHandle);
 
 
-void I2C_SlaveSendData(I2C_RegDef_t *pI2C,uint8_t data);
-uint8_t I2C_SlaveReceiveData(I2C_RegDef_t *pI2C);
+void I2C_SlaveSendData(uint8_t I2C,uint8_t data);
+uint8_t I2C_SlaveReceiveData(uint8_t I2Cx);
 
 /*
  * IRQ Configuration and ISR handling
  */
 void I2C_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi);
 void I2C_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority);
-void I2C_EV_IRQHandling(I2C_Handle_t *pI2CHandle);
-void I2C_ER_IRQHandling(I2C_Handle_t *pI2CHandle);
+void I2C_EV_IRQHandling(I2C_Handle_t I2CHandle);
+void I2C_ER_IRQHandling(I2C_Handle_t I2CHandle);
 
 
 /*
  * Other Peripheral Control APIs
  */
-void I2C_PeripheralControl(I2C_RegDef_t *pI2Cx, uint8_t EnOrDi);
-uint8_t I2C_GetFlagStatus(I2C_RegDef_t *pI2Cx , uint32_t FlagName);
-void I2C_ManageAcking(I2C_RegDef_t *pI2Cx, uint8_t EnorDi);
-void I2C_GenerateStopCondition(I2C_RegDef_t *pI2Cx);
+void I2C_PeripheralControl(uint8_t I2Cx, uint8_t EnOrDi);
+uint8_t I2C_GetFlagStatus(uint8_t I2Cx , uint32_t FlagName);
+void I2C_ManageAcking(uint8_t I2Cx, uint8_t EnorDi);
+void I2C_GenerateStopCondition(uint8_t I2Cx);
 
-void I2C_SlaveEnableDisableCallbackEvents(I2C_RegDef_t *pI2Cx,uint8_t EnorDi);
+void I2C_SlaveEnableDisableCallbackEvents(uint8_t I2Cx,uint8_t EnorDi);
 
 /*
  * Application callback
  */
-void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle,uint8_t AppEv);
+void I2C_ApplicationEventCallback(I2C_Handle_t I2CHandle,uint8_t AppEv);
 
 #endif

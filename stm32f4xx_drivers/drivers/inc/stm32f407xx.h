@@ -127,8 +127,10 @@ enum Peripherals_en {
 	WWDG, //11
 	IWDG, //12
 	I2S2EXT, //13
-	SPI2_I2S2, //14
-	SPI3I2S3, //15
+	SPI2,
+	I2S2=14, //14
+	SPI3,
+	I2S3=15, //15
 	I2S3EXT, //16
 	USART2, //17
 	USART3, //18
@@ -151,7 +153,9 @@ enum Peripherals_en {
 	USART1, //35
 	USART6, //36
 	RESERVED6, //37
-	ADC1_ADC2_ADC3, //38
+	ADC1,
+	ADC2=38,
+	ADC3=38, //38
 	RESERVED7, //39
 	SDIO, //40
 	SPI1, //41

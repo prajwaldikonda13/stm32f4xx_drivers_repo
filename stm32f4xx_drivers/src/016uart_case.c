@@ -7,8 +7,8 @@
 
 #include<stdio.h>
 #include<string.h>
-#include "stm32f407xx.h"
-
+#include "stm32f407xx_gpio_driver.h"
+#include"stm32f407xx_usart_driver.h"
 
 
 //we have 3 different messages that we transmit to arduino
@@ -30,21 +30,21 @@ extern void initialise_monitor_handles();
 
 void USART2_Init(void)
 {
-	usart2_handle.pUSARTx = USART2;
+	usart2_handle.USARTx = USART2;
 	usart2_handle.USART_Config.USART_Baud = USART_STD_BAUD_115200;
 	usart2_handle.USART_Config.USART_HWFlowControl = USART_HW_FLOW_CTRL_NONE;
 	usart2_handle.USART_Config.USART_Mode = USART_MODE_TXRX;
 	usart2_handle.USART_Config.USART_NoOfStopBits = USART_STOPBITS_1;
 	usart2_handle.USART_Config.USART_WordLength = USART_WORDLEN_8BITS;
 	usart2_handle.USART_Config.USART_ParityControl = USART_PARITY_DISABLE;
-	USART_Init(&usart2_handle);
+	USART_Init(usart2_handle);
 }
 
 void 	USART2_GPIOInit(void)
 {
 	GPIO_Handle_t usart_gpios;
 
-	usart_gpios.pGPIOx = GPIOA;
+	usart_gpios.GPIOx = GPIOA;
 	usart_gpios.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
 	usart_gpios.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
 	usart_gpios.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
@@ -52,10 +52,10 @@ void 	USART2_GPIOInit(void)
 	usart_gpios.GPIO_PinConfig.GPIO_PinAltFunMode =7;
 
 	usart_gpios.GPIO_PinConfig.GPIO_PinNumber  = GPIO_PIN_NO_2;
-	GPIO_Init(&usart_gpios);
+	GPIO_Init(usart_gpios);
 
 	usart_gpios.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_3;
-	GPIO_Init(&usart_gpios);
+	GPIO_Init(usart_gpios);
 
 }
 
@@ -64,16 +64,16 @@ void GPIO_ButtonInit(void)
 	GPIO_Handle_t GPIOBtn,GpioLed;
 
 	//this is btn gpio configuration
-	GPIOBtn.pGPIOx = GPIOA;
+	GPIOBtn.GPIOx = GPIOA;
 	GPIOBtn.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_0;
 	GPIOBtn.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
 	GPIOBtn.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
 	GPIOBtn.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
 
-	GPIO_Init(&GPIOBtn);
+	GPIO_Init(GPIOBtn);
 
 	//this is led gpio configuration
-	GpioLed.pGPIOx = GPIOD;
+	GpioLed.GPIOx = GPIOD;
 	GpioLed.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
 	GpioLed.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
 	GpioLed.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
@@ -82,7 +82,7 @@ void GPIO_ButtonInit(void)
 
 	GPIO_PeriClockControl(GPIOD,ENABLE);
 
-	GPIO_Init(&GpioLed);
+	GPIO_Init(GpioLed);
 
 }
 
@@ -120,10 +120,10 @@ int main(void)
 
 		//First lets enable the reception in interrupt mode
 		//this code enables the receive interrupt
-		while ( USART_ReceiveDataIT(&usart2_handle,rx_buf,strlen(msg[cnt])) != USART_READY );
+		while ( USART_ReceiveDataIT(usart2_handle,rx_buf,strlen(msg[cnt])) != USART_READY );
 
 		//Send the msg indexed by cnt in blocking mode
-    	USART_SendData(&usart2_handle,(uint8_t*)msg[cnt],strlen(msg[cnt]));
+    	USART_SendData(usart2_handle,(uint8_t*)msg[cnt],strlen(msg[cnt]));
 
     	printf("Transmitted : %s\n",msg[cnt]);
 
@@ -152,14 +152,14 @@ int main(void)
 
 void USART2_IRQHandler(void)
 {
-	USART_IRQHandling(&usart2_handle);
+	USART_IRQHandling(usart2_handle);
 }
 
 
 
 
 
-void USART_ApplicationEventCallback( USART_Handle_t *pUSARTHandle,uint8_t ApEv)
+void USART_ApplicationEventCallback( USART_Handle_t USARTHandle,uint8_t ApEv)
 {
    if(ApEv == USART_EVENT_RX_CMPLT)
    {

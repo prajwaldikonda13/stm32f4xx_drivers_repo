@@ -7,7 +7,7 @@
 #include"stm32f407xx_rcc_driver.h"
 #include "stm32f407xx_syscfg_driver.h"
 
-#define GPIOx_ptr(GPIOx)			((GPIO_RegDef_t*)BASE_ADDR_LST[GPIOx-50])
+#define GPIOx_ptr(GPIOx)			((GPIO_RegDef_t*)BASE_ADDR_LST[GPIOx])
 typedef struct
 {
 	vuint32_t MODER;                        /*!< GPIO port mode register,                    	Address offset: 0x00      */

@@ -8,7 +8,8 @@
 
 #include<stdio.h>
 #include<string.h>
-#include "stm32f407xx.h"
+#include "stm32f407xx_i2c_driver.h"
+#include"stm32f407xx_gpio_driver.h"
 
 
 #define SLAVE_ADDR  0x69
@@ -34,7 +35,7 @@ void I2C1_GPIOInits(void)
 {
 	GPIO_Handle_t I2CPins;
 
-	I2CPins.pGPIOx = GPIOB;
+	I2CPins.GPIOx = GPIOB;
 	I2CPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
 	I2CPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_OD;
 	I2CPins.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
@@ -43,25 +44,25 @@ void I2C1_GPIOInits(void)
 
 	//scl
 	I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_6;
-	GPIO_Init(&I2CPins);
+	GPIO_Init(I2CPins);
 
 
 	//sda
 	I2CPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_7;
-	GPIO_Init(&I2CPins);
+	GPIO_Init(I2CPins);
 
 
 }
 
 void I2C1_Inits(void)
 {
-	I2C1Handle.pI2Cx = I2C1;
+	I2C1Handle.I2Cx = I2C1;
 	I2C1Handle.I2C_Config.I2C_AckControl = I2C_ACK_ENABLE;
 	I2C1Handle.I2C_Config.I2C_DeviceAddress = MY_ADDR;
 	I2C1Handle.I2C_Config.I2C_FMDutyCycle = I2C_FM_DUTY_2;
 	I2C1Handle.I2C_Config.I2C_SCLSpeed = I2C_SCL_SPEED_SM;
 
-	I2C_Init(&I2C1Handle);
+	I2C_Init(I2C1Handle);
 
 }
 
@@ -70,13 +71,13 @@ void GPIO_ButtonInit(void)
 	GPIO_Handle_t GPIOBtn;
 
 	//this is btn gpio configuration
-	GPIOBtn.pGPIOx = GPIOA;
+	GPIOBtn.GPIOx = GPIOA;
 	GPIOBtn.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_0;
 	GPIOBtn.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
 	GPIOBtn.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
 	GPIOBtn.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
 
-	GPIO_Init(&GPIOBtn);
+	GPIO_Init(GPIOBtn);
 
 }
 
@@ -114,19 +115,19 @@ int main(void)
 
 void I2C1_EV_IRQHandler (void)
 {
-	I2C_EV_IRQHandling(&I2C1Handle);
+	I2C_EV_IRQHandling(I2C1Handle);
 }
 
 
 void I2C1_ER_IRQHandler (void)
 {
-	I2C_ER_IRQHandling(&I2C1Handle);
+	I2C_ER_IRQHandling(I2C1Handle);
 }
 
 
 
 
-void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle,uint8_t AppEv)
+void I2C_ApplicationEventCallback(I2C_Handle_t I2CHandle,uint8_t AppEv)
 {
 
 	static uint8_t commandCode = 0;
@@ -138,17 +139,17 @@ void I2C_ApplicationEventCallback(I2C_Handle_t *pI2CHandle,uint8_t AppEv)
 		if(commandCode == 0x51)
 		{
 			//send the length information to the master
-			I2C_SlaveSendData(pI2CHandle->pI2Cx,strlen((char*)Tx_buf));
+			I2C_SlaveSendData(I2CHandle.I2Cx,strlen((char*)Tx_buf));
 		}else if (commandCode == 0x52)
 		{
 			//Send the contents of Tx_buf
-			I2C_SlaveSendData(pI2CHandle->pI2Cx,Tx_buf[Cnt++]);
+			I2C_SlaveSendData(I2CHandle.I2Cx,Tx_buf[Cnt++]);
 
 		}
 	}else if (AppEv == I2C_EV_DATA_RCV)
 	{
 		//Data is waiting for the slave to read . slave has to read it
-		commandCode = I2C_SlaveReceiveData(pI2CHandle->pI2Cx);
+		commandCode = I2C_SlaveReceiveData(I2CHandle.I2Cx);
 
 	}else if (AppEv == I2C_ERROR_AF)
 	{

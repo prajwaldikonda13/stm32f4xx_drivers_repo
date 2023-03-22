@@ -11,6 +11,8 @@
 #include "stm32f407xx.h"
 #include"stm32f407xx_rcc_driver.h"
 
+#define SPIx_ptr(SPIx)			((SPI_RegDef_t*)BASE_ADDR_LST[SPIx])
+
 /*
  * Clock Enable Macros for SPIx peripheralsbu
  */
@@ -39,7 +41,7 @@ typedef struct
  */
 typedef struct
 {
-	SPI_RegDef_t 	*pSPIx;   /*!< This holds the base address of SPIx(x:0,1,2) peripheral >*/
+	uint8_t 	  	SPIx;   /*!< This holds the base address of SPIx(x:0,1,2) peripheral >*/
 	SPI_Config_t 	SPIConfig;
 	uint8_t 		*pTxBuffer; /* !< To store the app. Tx buffer address > */
 	uint8_t 		*pRxBuffer;	/* !< To store the app. Rx buffer address > */
@@ -134,46 +136,46 @@ typedef struct
 /*
  * Peripheral Clock setup
  */
-void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi);
+void SPI_PeriClockControl(uint8_t SPIx, uint8_t EnorDi);
 
 /*
  * Init and De-init
  */
-void SPI_Init(SPI_Handle_t *pSPIHandle);
-void SPI_DeInit(SPI_RegDef_t *pSPIx);
+void SPI_Init(SPI_Handle_t SPIHandle);
+void SPI_DeInit(uint8_t SPIx);
 
 
 /*
  * Data Send and Receive
  */
-void SPI_SendData(SPI_RegDef_t *pSPIx,uint8_t *pTxBuffer, uint32_t Len);
-void SPI_ReceiveData(SPI_RegDef_t *pSPIx, uint8_t *pRxBuffer, uint32_t Len);
+void SPI_SendData(uint8_t SPIx,uint8_t *pTxBuffer, uint32_t Len);
+void SPI_ReceiveData(uint8_t SPIx, uint8_t *pRxBuffer, uint32_t Len);
 
-uint8_t SPI_SendDataIT(SPI_Handle_t *pSPIHandle,uint8_t *pTxBuffer, uint32_t Len);
-uint8_t SPI_ReceiveDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pRxBuffer, uint32_t Len);
+uint8_t SPI_SendDataIT(SPI_Handle_t SPIHandle,uint8_t *pTxBuffer, uint32_t Len);
+uint8_t SPI_ReceiveDataIT(SPI_Handle_t SPIHandle, uint8_t *pRxBuffer, uint32_t Len);
 
 /*
  * IRQ Configuration and ISR handling
  */
 void SPI_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi);
 void SPI_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority);
-void SPI_IRQHandling(SPI_Handle_t *pHandle);
+void SPI_IRQHandling(SPI_Handle_t Handle);
 
 /*
  * Other Peripheral Control APIs
  */
-void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
-void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
-void SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
-uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx , uint32_t FlagName);
-void SPI_ClearOVRFlag(SPI_RegDef_t *pSPIx);
-void SPI_CloseTransmisson(SPI_Handle_t *pSPIHandle);
-void SPI_CloseReception(SPI_Handle_t *pSPIHandle);
-uint8_t I2C_DeviceMode(I2C_RegDef_t *I2Cx);
+void SPI_PeripheralControl(uint8_t SPIx, uint8_t EnOrDi);
+void SPI_SSIConfig(uint8_t SPIx, uint8_t EnOrDi);
+void SPI_SSOEConfig(uint8_t SPIx, uint8_t EnOrDi);
+uint8_t SPI_GetFlagStatus(uint8_t SPIx , uint32_t FlagName);
+void SPI_ClearOVRFlag(uint8_t SPIx);
+void SPI_CloseTransmisson(SPI_Handle_t SPIHandle);
+void SPI_CloseReception(SPI_Handle_t SPIHandle);
+uint8_t I2C_DeviceMode(uint8_t I2Cx);
 
 /*
  * Application callback
  */
-void SPI_ApplicationEventCallback(SPI_Handle_t *pSPIHandle,uint8_t AppEv);
+void SPI_ApplicationEventCallback(SPI_Handle_t SPIHandle,uint8_t AppEv);
 
 #endif /* INC_STM32F407XX_SPI_DRIVER_H_ */

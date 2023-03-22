@@ -15,9 +15,9 @@
  */
 #include<stdio.h>
 #include<string.h>
-#include "stm32f407xx.h"
+#include "stm32f407xx_spi_driver.h"
 
-
+#include"stm32f407xx_gpio_driver.h"
 SPI_Handle_t SPI2handle;
 
 #define MAX_LEN 500
@@ -49,7 +49,7 @@ void SPI2_GPIOInits(void)
 {
 	GPIO_Handle_t SPIPins;
 
-	SPIPins.pGPIOx = GPIOB;
+	SPIPins.GPIOx = GPIOB;
 	SPIPins.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
 	SPIPins.GPIO_PinConfig.GPIO_PinAltFunMode = 5;
 	SPIPins.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
@@ -58,27 +58,27 @@ void SPI2_GPIOInits(void)
 
 	//SCLK
 	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
-	GPIO_Init(&SPIPins);
+	GPIO_Init(SPIPins);
 
 	//MOSI
     SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_15;
-	GPIO_Init(&SPIPins);
+	GPIO_Init(SPIPins);
 
 	//MISO
 	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
-	GPIO_Init(&SPIPins);
+	GPIO_Init(SPIPins);
 
 
 	//NSS
 	SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
-	GPIO_Init(&SPIPins);
+	GPIO_Init(SPIPins);
 
 
 }
 
 void SPI2_Inits(void)
 {
-	SPI2handle.pSPIx = SPI2;
+	SPI2handle.SPIx = SPI2;
 	SPI2handle.SPIConfig.SPI_BusConfig = SPI_BUS_CONFIG_FD;
 	SPI2handle.SPIConfig.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
 	SPI2handle.SPIConfig.SPI_SclkSpeed = SPI_SCLK_SPEED_DIV32;
@@ -87,7 +87,7 @@ void SPI2_Inits(void)
 	SPI2handle.SPIConfig.SPI_CPHA = SPI_CPHA_LOW;
 	SPI2handle.SPIConfig.SPI_SSM = SPI_SSM_DI; //Hardware slave management enabled for NSS pin
 
-	SPI_Init(&SPI2handle);
+	SPI_Init(SPI2handle);
 }
 
 
@@ -98,13 +98,13 @@ void Slave_GPIO_InterruptPinInit(void)
 	memset(&spiIntPin,0,sizeof(spiIntPin));
 
 	//this is led gpio configuration
-	spiIntPin.pGPIOx = GPIOD;
+	spiIntPin.GPIOx = GPIOD;
 	spiIntPin.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_6;
 	spiIntPin.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IT_FT;
 	spiIntPin.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_LOW;
 	spiIntPin.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_PIN_PU;
 
-	GPIO_Init(&spiIntPin);
+	GPIO_Init(spiIntPin);
 
 	GPIO_IRQPriorityConfig(IRQ_NO_EXTI9_5,NVIC_IRQ_PRI15);
 	GPIO_IRQInterruptConfig(IRQ_NO_EXTI9_5,ENABLE);
@@ -150,8 +150,8 @@ int main(void)
 		while(!rcvStop)
 		{
 			/* fetch the data from the SPI peripheral byte by byte in interrupt mode */
-			while ( SPI_SendDataIT(&SPI2handle,&dummy,1) == SPI_BUSY_IN_TX);
-			while ( SPI_ReceiveDataIT(&SPI2handle,&ReadByte,1) == SPI_BUSY_IN_RX );
+			while ( SPI_SendDataIT(SPI2handle,&dummy,1) == SPI_BUSY_IN_TX);
+			while ( SPI_ReceiveDataIT(SPI2handle,&ReadByte,1) == SPI_BUSY_IN_RX );
 		}
 
 
@@ -178,12 +178,12 @@ int main(void)
 void SPI2_IRQHandler(void)
 {
 
-	SPI_IRQHandling(&SPI2handle);
+	SPI_IRQHandling(SPI2handle);
 }
 
 
 
-void SPI_ApplicationEventCallback(SPI_Handle_t *pSPIHandle,uint8_t AppEv)
+void SPI_ApplicationEventCallback(SPI_Handle_t SPIHandle,uint8_t AppEv)
 {
 	static uint32_t i = 0;
 	/* In the RX complete event , copy data in to rcv buffer . '\0' indicates end of message(rcvStop = 1) */

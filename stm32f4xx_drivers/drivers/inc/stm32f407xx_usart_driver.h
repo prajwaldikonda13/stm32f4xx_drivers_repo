@@ -1,16 +1,11 @@
-/*
- * STM32F4x_gpio_driver.h
- *
- *  Created on: 27-Nov-2018
- *      Author: kiran
- */
-
 #ifndef STM32F446X_UART_DRIVER_H_
 #define STM32F446X_UART_DRIVER_H_
 
-#include "stm32f407xx.h"
+#include "stm32f407xx_usart_driver.h"
 #include"stm32f407xx_rcc_driver.h"
 
+
+#define USARTx_ptr(USARTx)			((USART_RegDef_t*)BASE_ADDR_LST[USARTx])
 /*
  * Clock Enable Macros for USARTx peripherals
  */
@@ -40,7 +35,7 @@ typedef struct
  */
 typedef struct
 {
-	USART_RegDef_t *pUSARTx;
+	uint8_t USARTx;
 	USART_Config_t   USART_Config;
 	uint8_t *pTxBuffer;
 	uint8_t *pRxBuffer;
@@ -147,43 +142,43 @@ typedef struct
 /*
  * Peripheral Clock setup
  */
-void USART_PeriClockControl(USART_RegDef_t *pUSARTx, uint8_t EnOrDi);
+void USART_PeriClockControl(uint8_t USARTx, uint8_t EnOrDi);
 
 /*
  * Init and De-init
  */
-void USART_Init(USART_Handle_t *pUSARTHandle);
-void USART_DeInit(USART_Handle_t *pUSARTHandle);
+void USART_Init(USART_Handle_t USARTHandle);
+void USART_DeInit(USART_Handle_t USARTHandle);
 
 /*
  * Data Send and Receive
  */
-void USART_SendData(USART_Handle_t *pUSARTHandle, uint8_t *pTxBuffer, uint32_t Len);
-void  USART_ReceiveData(USART_Handle_t *pUSARTHandle,uint8_t *pRxBuffer, uint32_t Len);
-uint8_t USART_SendDataIT(USART_Handle_t *pUSARTHandle,uint8_t *pTxBuffer, uint32_t Len);
-uint8_t USART_ReceiveDataIT(USART_Handle_t *pUSARTHandle,uint8_t *pRxBuffer, uint32_t Len);
+void USART_SendData(USART_Handle_t USARTHandle, uint8_t *pTxBuffer, uint32_t Len);
+void  USART_ReceiveData(USART_Handle_t USARTHandle,uint8_t *pRxBuffer, uint32_t Len);
+uint8_t USART_SendDataIT(USART_Handle_t USARTHandle,uint8_t *pTxBuffer, uint32_t Len);
+uint8_t USART_ReceiveDataIT(USART_Handle_t USARTHandle,uint8_t *pRxBuffer, uint32_t Len);
 
 /*
  * IRQ Configuration and ISR handling
  */
 void USART_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi);
 void USART_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority);
-void USART_IRQHandling(USART_Handle_t *pUSARTHandle);
+void USART_IRQHandling(USART_Handle_t USARTHandle);
 
 /*
  * Other Peripheral Control APIs
  */
 
-uint8_t USART_GetFlagStatus(USART_RegDef_t *pUSARTx, uint8_t StatusFlagName);
-void USART_ClearFlag(USART_RegDef_t *pUSARTx, uint16_t StatusFlagName);
-void USART_PeripheralControl(USART_RegDef_t *pUSARTx, uint8_t EnOrDi);
-void USART_SetBaudRate(USART_RegDef_t *pUSARTx, uint32_t BaudRate);
+uint8_t USART_GetFlagStatus(uint8_t USARTx, uint8_t StatusFlagName);
+void USART_ClearFlag(uint8_t USARTx, uint16_t StatusFlagName);
+void USART_PeripheralControl(uint8_t USARTx, uint8_t EnOrDi);
+void USART_SetBaudRate(uint8_t USARTx, uint32_t BaudRate);
 
 
 /*
  * Application Callbacks
  */
-void USART_ApplicationEventCallback(USART_Handle_t *pUSARTHandle,uint8_t ApEv);
+void USART_ApplicationEventCallback(USART_Handle_t USARTHandle,uint8_t ApEv);
 
 
 

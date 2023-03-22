@@ -1,52 +1,385 @@
-12:21:23 **** Incremental Build of configuration Debug for project stm32f4xx_drivers ****
+15:12:23 **** Incremental Build of configuration Debug for project stm32f4xx_drivers ****
 make all 
-arm-none-eabi-gcc -mcpu=cortex-m4 -g3 -c -x assembler-with-cpp -MMD -MP -MF"startup/startup_stm32.d" -MT"startup/startup_stm32.o"  -mfloat-abi=soft -mthumb -o "startup/startup_stm32.o" "../startup/startup_stm32.s"
-arm-none-eabi-gcc "../src/005button_interrupt.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"src/005button_interrupt.d" -MT"src/005button_interrupt.o"  -mfloat-abi=soft -mthumb -o "src/005button_interrupt.o"
+arm-none-eabi-gcc "../src/016uart_case.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"src/016uart_case.d" -MT"src/016uart_case.o"  -mfloat-abi=soft -mthumb -o "src/016uart_case.o"
+../src/016uart_case.c: In function 'main':
+../src/016uart_case.c:123:45: warning: pointer targets in passing argument 2 of 'USART_ReceiveDataIT' differ in signedness [-Wpointer-sign]
+  123 |   while ( USART_ReceiveDataIT(usart2_handle,rx_buf,strlen(msg[cnt])) != USART_READY );
+      |                                             ^~~~~~
+      |                                             |
+      |                                             char *
+In file included from ../src/016uart_case.c:11:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_usart_driver.h:159:65: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
+  159 | uint8_t USART_ReceiveDataIT(USART_Handle_t USARTHandle,uint8_t *pRxBuffer, uint32_t Len);
+      |                                                        ~~~~~~~~~^~~~~~~~~
 arm-none-eabi-gcc "../drivers/src/stm32f407xx.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx.d" -MT"drivers/src/stm32f407xx.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx.o"
 arm-none-eabi-gcc "../drivers/src/stm32f407xx_exti_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_exti_driver.d" -MT"drivers/src/stm32f407xx_exti_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_exti_driver.o"
 arm-none-eabi-gcc "../drivers/src/stm32f407xx_gpio_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_gpio_driver.d" -MT"drivers/src/stm32f407xx_gpio_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_gpio_driver.o"
 arm-none-eabi-gcc "../drivers/src/stm32f407xx_i2c_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_i2c_driver.d" -MT"drivers/src/stm32f407xx_i2c_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_i2c_driver.o"
-../drivers/src/stm32f407xx_i2c_driver.c: In function 'I2C_PeriClockControl':
-../drivers/src/stm32f407xx_i2c_driver.c:154:12: warning: comparison between pointer and integer
-  154 |   if(pI2Cx == I2C1)
-      |            ^~
-../drivers/src/stm32f407xx_i2c_driver.c:157:19: warning: comparison between pointer and integer
-  157 |   }else if (pI2Cx == I2C2)
-      |                   ^~
-../drivers/src/stm32f407xx_i2c_driver.c:160:19: warning: comparison between pointer and integer
-  160 |   }else if (pI2Cx == I2C3)
-      |                   ^~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+../drivers/src/stm32f407xx_i2c_driver.c: In function 'I2C_ClearADDRFlag':
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_ManageAcking' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:47:22: note: in expansion of macro 'I2Cx_ptr'
+   47 |     I2C_ManageAcking(I2Cx_ptr(I2CHandle.I2Cx),DISABLE);
+      |                      ^~~~~~~~
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:162:31: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  162 | void I2C_ManageAcking(uint8_t I2Cx, uint8_t EnorDi);
+      |                       ~~~~~~~~^~~~
+../drivers/src/stm32f407xx_i2c_driver.c: In function 'I2C_Init':
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_PeriClockControl' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:187:23: note: in expansion of macro 'I2Cx_ptr'
+  187 |  I2C_PeriClockControl(I2Cx_ptr(I2CHandle.I2Cx),ENABLE);
+      |                       ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:143:35: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  143 | void I2C_PeriClockControl(uint8_t I2Cx, uint8_t EnorDi)
+      |                           ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+../drivers/src/stm32f407xx_i2c_driver.c: In function 'I2C_MasterSendData':
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GenerateStartCondition' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:281:29: note: in expansion of macro 'I2Cx_ptr'
+  281 |  I2C_GenerateStartCondition(I2Cx_ptr(I2CHandle.I2Cx));
+      |                             ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:12:48: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+   12 | static void I2C_GenerateStartCondition(uint8_t I2Cx)
+      |                                        ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GetFlagStatus' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:285:30: note: in expansion of macro 'I2Cx_ptr'
+  285 |  while( !  I2C_GetFlagStatus(I2Cx_ptr(I2CHandle.I2Cx),I2C_FLAG_SB)   );
+      |                              ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:267:35: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  267 | uint8_t I2C_GetFlagStatus(uint8_t I2Cx , uint32_t FlagName)
+      |                           ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_ExecuteAddressPhaseWrite' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:288:31: note: in expansion of macro 'I2Cx_ptr'
+  288 |  I2C_ExecuteAddressPhaseWrite(I2Cx_ptr(I2CHandle.I2Cx),SlaveAddr);
+      |                               ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:19:50: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+   19 | static void I2C_ExecuteAddressPhaseWrite(uint8_t I2Cx, uint8_t SlaveAddr)
+      |                                          ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GetFlagStatus' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:291:30: note: in expansion of macro 'I2Cx_ptr'
+  291 |  while( !  I2C_GetFlagStatus(I2Cx_ptr(I2CHandle.I2Cx),I2C_FLAG_ADDR)   );
+      |                              ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:267:35: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  267 | uint8_t I2C_GetFlagStatus(uint8_t I2Cx , uint32_t FlagName)
+      |                           ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GetFlagStatus' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:301:29: note: in expansion of macro 'I2Cx_ptr'
+  301 |   while(! I2C_GetFlagStatus(I2Cx_ptr(I2CHandle.I2Cx),I2C_FLAG_TXE) ); //Wait till TXE is set
+      |                             ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:267:35: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  267 | uint8_t I2C_GetFlagStatus(uint8_t I2Cx , uint32_t FlagName)
+      |                           ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GetFlagStatus' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:311:28: note: in expansion of macro 'I2Cx_ptr'
+  311 |  while(! I2C_GetFlagStatus(I2Cx_ptr(I2CHandle.I2Cx),I2C_FLAG_TXE) );
+      |                            ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:267:35: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  267 | uint8_t I2C_GetFlagStatus(uint8_t I2Cx , uint32_t FlagName)
+      |                           ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GetFlagStatus' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:313:28: note: in expansion of macro 'I2Cx_ptr'
+  313 |  while(! I2C_GetFlagStatus(I2Cx_ptr(I2CHandle.I2Cx),I2C_FLAG_BTF) );
+      |                            ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:267:35: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  267 | uint8_t I2C_GetFlagStatus(uint8_t I2Cx , uint32_t FlagName)
+      |                           ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GenerateStopCondition' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:319:29: note: in expansion of macro 'I2Cx_ptr'
+  319 |   I2C_GenerateStopCondition(I2Cx_ptr(I2CHandle.I2Cx));
+      |                             ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:79:41: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+   79 |  void I2C_GenerateStopCondition(uint8_t I2Cx)
+      |                                 ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+../drivers/src/stm32f407xx_i2c_driver.c: In function 'I2C_MasterReceiveData':
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GenerateStartCondition' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:328:29: note: in expansion of macro 'I2Cx_ptr'
+  328 |  I2C_GenerateStartCondition(I2Cx_ptr(I2CHandle.I2Cx));
+      |                             ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:12:48: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+   12 | static void I2C_GenerateStartCondition(uint8_t I2Cx)
+      |                                        ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GetFlagStatus' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:332:30: note: in expansion of macro 'I2Cx_ptr'
+  332 |  while( !  I2C_GetFlagStatus(I2Cx_ptr(I2CHandle.I2Cx),I2C_FLAG_SB)   );
+      |                              ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:267:35: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  267 | uint8_t I2C_GetFlagStatus(uint8_t I2Cx , uint32_t FlagName)
+      |                           ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_ExecuteAddressPhaseRead' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:335:30: note: in expansion of macro 'I2Cx_ptr'
+  335 |  I2C_ExecuteAddressPhaseRead(I2Cx_ptr(I2CHandle.I2Cx),SlaveAddr);
+      |                              ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:27:49: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+   27 | static void I2C_ExecuteAddressPhaseRead(uint8_t I2Cx, uint8_t SlaveAddr)
+      |                                         ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GetFlagStatus' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:338:30: note: in expansion of macro 'I2Cx_ptr'
+  338 |  while( !  I2C_GetFlagStatus(I2Cx_ptr(I2CHandle.I2Cx),I2C_FLAG_ADDR)   );
+      |                              ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:267:35: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  267 | uint8_t I2C_GetFlagStatus(uint8_t I2Cx , uint32_t FlagName)
+      |                           ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_ManageAcking' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:345:20: note: in expansion of macro 'I2Cx_ptr'
+  345 |   I2C_ManageAcking(I2Cx_ptr(I2CHandle.I2Cx),I2C_ACK_DISABLE);
+      |                    ^~~~~~~~
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:162:31: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  162 | void I2C_ManageAcking(uint8_t I2Cx, uint8_t EnorDi);
+      |                       ~~~~~~~~^~~~
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GetFlagStatus' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:352:29: note: in expansion of macro 'I2Cx_ptr'
+  352 |   while(! I2C_GetFlagStatus(I2Cx_ptr(I2CHandle.I2Cx),I2C_FLAG_RXNE) );
+      |                             ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:267:35: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  267 | uint8_t I2C_GetFlagStatus(uint8_t I2Cx , uint32_t FlagName)
+      |                           ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GenerateStopCondition' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:356:30: note: in expansion of macro 'I2Cx_ptr'
+  356 |    I2C_GenerateStopCondition(I2Cx_ptr(I2CHandle.I2Cx));
+      |                              ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:79:41: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+   79 |  void I2C_GenerateStopCondition(uint8_t I2Cx)
+      |                                 ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GetFlagStatus' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:374:30: note: in expansion of macro 'I2Cx_ptr'
+  374 |    while(! I2C_GetFlagStatus(I2Cx_ptr(I2CHandle.I2Cx),I2C_FLAG_RXNE) );
+      |                              ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:267:35: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  267 | uint8_t I2C_GetFlagStatus(uint8_t I2Cx , uint32_t FlagName)
+      |                           ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_ManageAcking' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:379:22: note: in expansion of macro 'I2Cx_ptr'
+  379 |     I2C_ManageAcking(I2Cx_ptr(I2CHandle.I2Cx),I2C_ACK_DISABLE);
+      |                      ^~~~~~~~
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:162:31: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  162 | void I2C_ManageAcking(uint8_t I2Cx, uint8_t EnorDi);
+      |                       ~~~~~~~~^~~~
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GenerateStopCondition' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:383:32: note: in expansion of macro 'I2Cx_ptr'
+  383 |      I2C_GenerateStopCondition(I2Cx_ptr(I2CHandle.I2Cx));
+      |                                ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:79:41: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+   79 |  void I2C_GenerateStopCondition(uint8_t I2Cx)
+      |                                 ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_ManageAcking' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:400:20: note: in expansion of macro 'I2Cx_ptr'
+  400 |   I2C_ManageAcking(I2Cx_ptr(I2CHandle.I2Cx),I2C_ACK_ENABLE);
+      |                    ^~~~~~~~
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:162:31: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  162 | void I2C_ManageAcking(uint8_t I2Cx, uint8_t EnorDi);
+      |                       ~~~~~~~~^~~~
 ../drivers/src/stm32f407xx_i2c_driver.c: In function 'I2C_IRQPriorityConfig':
-../drivers/src/stm32f407xx_i2c_driver.c:499:10: warning: unused variable 'iprx_section' [-Wunused-variable]
-  499 |  uint8_t iprx_section  = IRQNumber %4 ;
+../drivers/src/stm32f407xx_i2c_driver.c:492:10: warning: unused variable 'iprx_section' [-Wunused-variable]
+  492 |  uint8_t iprx_section  = IRQNumber %4 ;
       |          ^~~~~~~~~~~~
-../drivers/src/stm32f407xx_i2c_driver.c:498:10: warning: unused variable 'iprx' [-Wunused-variable]
-  498 |  uint8_t iprx = IRQNumber / 4;
+../drivers/src/stm32f407xx_i2c_driver.c:491:10: warning: unused variable 'iprx' [-Wunused-variable]
+  491 |  uint8_t iprx = IRQNumber / 4;
       |          ^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+../drivers/src/stm32f407xx_i2c_driver.c: In function 'I2C_MasterSendDataIT':
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GenerateStartCondition' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:527:30: note: in expansion of macro 'I2Cx_ptr'
+  527 |   I2C_GenerateStartCondition(I2Cx_ptr(I2CHandle.I2Cx));
+      |                              ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:12:48: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+   12 | static void I2C_GenerateStartCondition(uint8_t I2Cx)
+      |                                        ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+../drivers/src/stm32f407xx_i2c_driver.c: In function 'I2C_MasterReceiveDataIT':
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GenerateStartCondition' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:572:30: note: in expansion of macro 'I2Cx_ptr'
+  572 |   I2C_GenerateStartCondition(I2Cx_ptr(I2CHandle.I2Cx));
+      |                              ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:12:48: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+   12 | static void I2C_GenerateStartCondition(uint8_t I2Cx)
+      |                                        ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+../drivers/src/stm32f407xx_i2c_driver.c: In function 'I2C_MasterHandleRXNEInterrupt':
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_ManageAcking' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:621:21: note: in expansion of macro 'I2Cx_ptr'
+  621 |    I2C_ManageAcking(I2Cx_ptr(I2CHandle.I2Cx),DISABLE);
+      |                     ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:406:31: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  406 | void I2C_ManageAcking(uint8_t I2Cx, uint8_t EnorDi)
+      |                       ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GenerateStopCondition' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:636:30: note: in expansion of macro 'I2Cx_ptr'
+  636 |    I2C_GenerateStopCondition(I2Cx_ptr(I2CHandle.I2Cx));
+      |                              ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:79:41: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+   79 |  void I2C_GenerateStopCondition(uint8_t I2Cx)
+      |                                 ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+../drivers/src/stm32f407xx_i2c_driver.c: In function 'I2C_CloseReceiveData':
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_ManageAcking' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:662:20: note: in expansion of macro 'I2Cx_ptr'
+  662 |   I2C_ManageAcking(I2Cx_ptr(I2CHandle.I2Cx),ENABLE);
+      |                    ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:406:31: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  406 | void I2C_ManageAcking(uint8_t I2Cx, uint8_t EnorDi)
+      |                       ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+../drivers/src/stm32f407xx_i2c_driver.c: In function 'I2C_EV_IRQHandling':
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_ExecuteAddressPhaseWrite' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:713:33: note: in expansion of macro 'I2Cx_ptr'
+  713 |    I2C_ExecuteAddressPhaseWrite(I2Cx_ptr(I2CHandle.I2Cx),I2CHandle.DevAddr);
+      |                                 ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:19:50: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+   19 | static void I2C_ExecuteAddressPhaseWrite(uint8_t I2Cx, uint8_t SlaveAddr)
+      |                                          ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_ExecuteAddressPhaseRead' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:716:32: note: in expansion of macro 'I2Cx_ptr'
+  716 |    I2C_ExecuteAddressPhaseRead(I2Cx_ptr(I2CHandle.I2Cx),I2CHandle.DevAddr);
+      |                                ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:27:49: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+   27 | static void I2C_ExecuteAddressPhaseRead(uint8_t I2Cx, uint8_t SlaveAddr)
+      |                                         ~~~~~~~~^~~~
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GenerateStopCondition' makes integer from pointer without a cast [-Wint-conversion]
+   15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
+      |                          ~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                           |
+      |                           I2C_RegDef_t *
+../drivers/src/stm32f407xx_i2c_driver.c:745:33: note: in expansion of macro 'I2Cx_ptr'
+  745 |       I2C_GenerateStopCondition(I2Cx_ptr(I2CHandle.I2Cx));
+      |                                 ^~~~~~~~
+../drivers/src/stm32f407xx_i2c_driver.c:79:41: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+   79 |  void I2C_GenerateStopCondition(uint8_t I2Cx)
+      |                                 ~~~~~~~~^~~~
 arm-none-eabi-gcc "../drivers/src/stm32f407xx_nvic_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_nvic_driver.d" -MT"drivers/src/stm32f407xx_nvic_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_nvic_driver.o"
 arm-none-eabi-gcc "../drivers/src/stm32f407xx_rcc_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_rcc_driver.d" -MT"drivers/src/stm32f407xx_rcc_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_rcc_driver.o"
 arm-none-eabi-gcc "../drivers/src/stm32f407xx_spi_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_spi_driver.d" -MT"drivers/src/stm32f407xx_spi_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_spi_driver.o"
 arm-none-eabi-gcc "../drivers/src/stm32f407xx_usart_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_usart_driver.d" -MT"drivers/src/stm32f407xx_usart_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_usart_driver.o"
-../drivers/src/stm32f407xx_usart_driver.c: In function 'USART_SetBaudRate':
-../drivers/src/stm32f407xx_usart_driver.c:33:14: warning: comparison between pointer and integer
-   33 |   if(pUSARTx == USART1 || pUSARTx == USART6)
-      |              ^~
-../drivers/src/stm32f407xx_usart_driver.c:33:35: warning: comparison between pointer and integer
-   33 |   if(pUSARTx == USART1 || pUSARTx == USART6)
-      |                                   ^~
-../drivers/src/stm32f407xx_usart_driver.c: In function 'USART_PeriClockControl':
-../drivers/src/stm32f407xx_usart_driver.c:242:14: warning: comparison between pointer and integer
-  242 |   if(pUSARTx == USART1)
-      |              ^~
-../drivers/src/stm32f407xx_usart_driver.c:245:21: warning: comparison between pointer and integer
-  245 |   }else if (pUSARTx == USART2)
-      |                     ^~
-../drivers/src/stm32f407xx_usart_driver.c:248:21: warning: comparison between pointer and integer
-  248 |   }else if (pUSARTx == USART3)
-      |                     ^~
-../drivers/src/stm32f407xx_usart_driver.c:252:20: warning: comparison between pointer and integer
-  252 |   else if (pUSARTx == UART4)
-      |                    ^~
 ../drivers/src/stm32f407xx_usart_driver.c: In function 'USART_IRQPriorityConfig':
 ../drivers/src/stm32f407xx_usart_driver.c:594:10: warning: unused variable 'iprx_section' [-Wunused-variable]
   594 |  uint8_t iprx_section  = IRQNumber %4 ;
@@ -55,6 +388,15 @@ arm-none-eabi-gcc "../drivers/src/stm32f407xx_usart_driver.c" -mcpu=cortex-m4 -s
   593 |  uint8_t iprx = IRQNumber / 4;
       |          ^~~~
 ../drivers/src/stm32f407xx_usart_driver.c: In function 'USART_IRQHandling':
+../drivers/src/stm32f407xx_usart_driver.c:757:30: warning: assignment to 'uint8_t *' {aka 'unsigned char *'} from 'long unsigned int' makes pointer from integer without a cast [-Wint-conversion]
+  757 |        USARTHandle.pRxBuffer = (USARTx_ptr(USARTHandle.USARTx)->DR  & (uint8_t)0xFF);
+      |                              ^
+../drivers/src/stm32f407xx_usart_driver.c:772:30: warning: assignment to 'uint8_t *' {aka 'unsigned char *'} from 'unsigned char' makes pointer from integer without a cast [-Wint-conversion]
+  772 |        USARTHandle.pRxBuffer = (uint8_t) (USARTx_ptr(USARTHandle.USARTx)->DR  & (uint8_t)0xFF);
+      |                              ^
+../drivers/src/stm32f407xx_usart_driver.c:781:30: warning: assignment to 'uint8_t *' {aka 'unsigned char *'} from 'unsigned char' makes pointer from integer without a cast [-Wint-conversion]
+  781 |        USARTHandle.pRxBuffer = (uint8_t) (USARTx_ptr(USARTHandle.USARTx)->DR  & (uint8_t)0x7F);
+      |                              ^
 ../drivers/src/stm32f407xx_usart_driver.c:619:26: warning: variable 'temp3' set but not used [-Wunused-but-set-variable]
   619 |  uint32_t temp1 , temp2, temp3;
       |                          ^~~~~
@@ -63,7 +405,7 @@ Finished building target: stm32f4xx_drivers.elf
  
 arm-none-eabi-size   stm32f4xx_drivers.elf 
    text	   data	    bss	    dec	    hex	filename
-   2448	   1600	   1060	   5108	   13f4	stm32f4xx_drivers.elf
+  29804	   3024	   2356	  35184	   8970	stm32f4xx_drivers.elf
 Finished building: default.size.stdout
  
 arm-none-eabi-objdump -h -S  stm32f4xx_drivers.elf  > "stm32f4xx_drivers.list"
@@ -73,5 +415,5 @@ arm-none-eabi-objcopy  -O binary  stm32f4xx_drivers.elf  "stm32f4xx_drivers.bin"
 Finished building: stm32f4xx_drivers.bin
  
 
-12:21:25 Build Finished. 0 errors, 14 warnings. (took 2s.9ms)
+15:12:26 Build Finished. 0 errors, 38 warnings. (took 2s.263ms)
 
