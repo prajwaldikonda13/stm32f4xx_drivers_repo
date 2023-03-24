@@ -1,16 +1,6 @@
-15:12:23 **** Incremental Build of configuration Debug for project stm32f4xx_drivers ****
+13:06:04 **** Incremental Build of configuration Debug for project stm32f4xx_drivers ****
 make all 
-arm-none-eabi-gcc "../src/016uart_case.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"src/016uart_case.d" -MT"src/016uart_case.o"  -mfloat-abi=soft -mthumb -o "src/016uart_case.o"
-../src/016uart_case.c: In function 'main':
-../src/016uart_case.c:123:45: warning: pointer targets in passing argument 2 of 'USART_ReceiveDataIT' differ in signedness [-Wpointer-sign]
-  123 |   while ( USART_ReceiveDataIT(usart2_handle,rx_buf,strlen(msg[cnt])) != USART_READY );
-      |                                             ^~~~~~
-      |                                             |
-      |                                             char *
-In file included from ../src/016uart_case.c:11:
-C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_usart_driver.h:159:65: note: expected 'uint8_t *' {aka 'unsigned char *'} but argument is of type 'char *'
-  159 | uint8_t USART_ReceiveDataIT(USART_Handle_t USARTHandle,uint8_t *pRxBuffer, uint32_t Len);
-      |                                                        ~~~~~~~~~^~~~~~~~~
+arm-none-eabi-gcc "../src/005button_interrupt.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"src/005button_interrupt.d" -MT"src/005button_interrupt.o"  -mfloat-abi=soft -mthumb -o "src/005button_interrupt.o"
 arm-none-eabi-gcc "../drivers/src/stm32f407xx.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx.d" -MT"drivers/src/stm32f407xx.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx.o"
 arm-none-eabi-gcc "../drivers/src/stm32f407xx_exti_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_exti_driver.d" -MT"drivers/src/stm32f407xx_exti_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_exti_driver.o"
 arm-none-eabi-gcc "../drivers/src/stm32f407xx_gpio_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_gpio_driver.d" -MT"drivers/src/stm32f407xx_gpio_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_gpio_driver.o"
@@ -25,9 +15,23 @@ C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/st
 ../drivers/src/stm32f407xx_i2c_driver.c:47:22: note: in expansion of macro 'I2Cx_ptr'
    47 |     I2C_ManageAcking(I2Cx_ptr(I2CHandle.I2Cx),DISABLE);
       |                      ^~~~~~~~
-C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:162:31: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
-  162 | void I2C_ManageAcking(uint8_t I2Cx, uint8_t EnorDi);
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:159:31: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  159 | void I2C_ManageAcking(uint8_t I2Cx, uint8_t Status);
       |                       ~~~~~~~~^~~~
+../drivers/src/stm32f407xx_i2c_driver.c: In function 'I2C_PeriClockControl':
+../drivers/src/stm32f407xx_i2c_driver.c:149:4: warning: implicit declaration of function 'I2C1_PCLK_EN'; did you mean 'I2Cx_PCLK_CTRL'? [-Wimplicit-function-declaration]
+  149 |    I2C1_PCLK_EN();
+      |    ^~~~~~~~~~~~
+      |    I2Cx_PCLK_CTRL
+../drivers/src/stm32f407xx_i2c_driver.c:152:4: warning: implicit declaration of function 'I2C2_PCLK_EN'; did you mean 'I2Cx_PCLK_CTRL'? [-Wimplicit-function-declaration]
+  152 |    I2C2_PCLK_EN();
+      |    ^~~~~~~~~~~~
+      |    I2Cx_PCLK_CTRL
+../drivers/src/stm32f407xx_i2c_driver.c:155:4: warning: implicit declaration of function 'I2C3_PCLK_EN'; did you mean 'I2Cx_PCLK_CTRL'? [-Wimplicit-function-declaration]
+  155 |    I2C3_PCLK_EN();
+      |    ^~~~~~~~~~~~
+      |    I2Cx_PCLK_CTRL
+In file included from ../drivers/src/stm32f407xx_i2c_driver.c:1:
 ../drivers/src/stm32f407xx_i2c_driver.c: In function 'I2C_Init':
 C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_PeriClockControl' makes integer from pointer without a cast [-Wint-conversion]
    15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
@@ -195,8 +199,8 @@ C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/st
 ../drivers/src/stm32f407xx_i2c_driver.c:345:20: note: in expansion of macro 'I2Cx_ptr'
   345 |   I2C_ManageAcking(I2Cx_ptr(I2CHandle.I2Cx),I2C_ACK_DISABLE);
       |                    ^~~~~~~~
-C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:162:31: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
-  162 | void I2C_ManageAcking(uint8_t I2Cx, uint8_t EnorDi);
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:159:31: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  159 | void I2C_ManageAcking(uint8_t I2Cx, uint8_t Status);
       |                       ~~~~~~~~^~~~
 C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GetFlagStatus' makes integer from pointer without a cast [-Wint-conversion]
    15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
@@ -242,8 +246,8 @@ C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/st
 ../drivers/src/stm32f407xx_i2c_driver.c:379:22: note: in expansion of macro 'I2Cx_ptr'
   379 |     I2C_ManageAcking(I2Cx_ptr(I2CHandle.I2Cx),I2C_ACK_DISABLE);
       |                      ^~~~~~~~
-C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:162:31: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
-  162 | void I2C_ManageAcking(uint8_t I2Cx, uint8_t EnorDi);
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:159:31: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  159 | void I2C_ManageAcking(uint8_t I2Cx, uint8_t Status);
       |                       ~~~~~~~~^~~~
 C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:15:27: warning: passing argument 1 of 'I2C_GenerateStopCondition' makes integer from pointer without a cast [-Wint-conversion]
    15 | #define I2Cx_ptr(I2Cx)   ((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
@@ -265,8 +269,8 @@ C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/st
 ../drivers/src/stm32f407xx_i2c_driver.c:400:20: note: in expansion of macro 'I2Cx_ptr'
   400 |   I2C_ManageAcking(I2Cx_ptr(I2CHandle.I2Cx),I2C_ACK_ENABLE);
       |                    ^~~~~~~~
-C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:162:31: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
-  162 | void I2C_ManageAcking(uint8_t I2Cx, uint8_t EnorDi);
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_i2c_driver.h:159:31: note: expected 'uint8_t' {aka 'unsigned char'} but argument is of type 'I2C_RegDef_t *'
+  159 | void I2C_ManageAcking(uint8_t I2Cx, uint8_t Status);
       |                       ~~~~~~~~^~~~
 ../drivers/src/stm32f407xx_i2c_driver.c: In function 'I2C_IRQPriorityConfig':
 ../drivers/src/stm32f407xx_i2c_driver.c:492:10: warning: unused variable 'iprx_section' [-Wunused-variable]
@@ -379,6 +383,15 @@ C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/st
 arm-none-eabi-gcc "../drivers/src/stm32f407xx_nvic_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_nvic_driver.d" -MT"drivers/src/stm32f407xx_nvic_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_nvic_driver.o"
 arm-none-eabi-gcc "../drivers/src/stm32f407xx_rcc_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_rcc_driver.d" -MT"drivers/src/stm32f407xx_rcc_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_rcc_driver.o"
 arm-none-eabi-gcc "../drivers/src/stm32f407xx_spi_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_spi_driver.d" -MT"drivers/src/stm32f407xx_spi_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_spi_driver.o"
+In file included from ../drivers/src/stm32f407xx_spi_driver.c:8:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_spi_driver.h:13: warning: "RCC_APB2_PER_CLK_CTRL" redefined
+   13 | #define RCC_APB2_PER_CLK_CTRL(BITPOS,STATE)
+      | 
+In file included from C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_spi_driver.h:5,
+                 from ../drivers/src/stm32f407xx_spi_driver.c:8:
+C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc/stm32f407xx_rcc_driver.h:57: note: this is the location of the previous definition
+   57 | #define RCC_APB2_PER_CLK_CTRL(BITPOS,STATE)  MODIFY_BIT_N(RCC_ptr->APB2ENR,BITPOS,STATE)
+      | 
 arm-none-eabi-gcc "../drivers/src/stm32f407xx_usart_driver.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DSTM32 -DSTM32F4 -DSTM32F407VGTx -DSTM32F407G_DISC1 -DDEBUG -c -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/drivers/inc" -I"C:/Users/Prajwal Dikonda/Desktop/STM32 Projects/stm32f4xx_drivers/bsp" -O0 -ffunction-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"drivers/src/stm32f407xx_usart_driver.d" -MT"drivers/src/stm32f407xx_usart_driver.o"  -mfloat-abi=soft -mthumb -o "drivers/src/stm32f407xx_usart_driver.o"
 ../drivers/src/stm32f407xx_usart_driver.c: In function 'USART_IRQPriorityConfig':
 ../drivers/src/stm32f407xx_usart_driver.c:594:10: warning: unused variable 'iprx_section' [-Wunused-variable]
@@ -388,7 +401,7 @@ arm-none-eabi-gcc "../drivers/src/stm32f407xx_usart_driver.c" -mcpu=cortex-m4 -s
   593 |  uint8_t iprx = IRQNumber / 4;
       |          ^~~~
 ../drivers/src/stm32f407xx_usart_driver.c: In function 'USART_IRQHandling':
-../drivers/src/stm32f407xx_usart_driver.c:757:30: warning: assignment to 'uint8_t *' {aka 'unsigned char *'} from 'long unsigned int' makes pointer from integer without a cast [-Wint-conversion]
+../drivers/src/stm32f407xx_usart_driver.c:757:30: warning: assignment to 'uint8_t *' {aka 'unsigned char *'} from 'unsigned int' makes pointer from integer without a cast [-Wint-conversion]
   757 |        USARTHandle.pRxBuffer = (USARTx_ptr(USARTHandle.USARTx)->DR  & (uint8_t)0xFF);
       |                              ^
 ../drivers/src/stm32f407xx_usart_driver.c:772:30: warning: assignment to 'uint8_t *' {aka 'unsigned char *'} from 'unsigned char' makes pointer from integer without a cast [-Wint-conversion]
@@ -405,7 +418,7 @@ Finished building target: stm32f4xx_drivers.elf
  
 arm-none-eabi-size   stm32f4xx_drivers.elf 
    text	   data	    bss	    dec	    hex	filename
-  29804	   3024	   2356	  35184	   8970	stm32f4xx_drivers.elf
+   2440	   1600	   1060	   5100	   13ec	stm32f4xx_drivers.elf
 Finished building: default.size.stdout
  
 arm-none-eabi-objdump -h -S  stm32f4xx_drivers.elf  > "stm32f4xx_drivers.list"
@@ -415,5 +428,5 @@ arm-none-eabi-objcopy  -O binary  stm32f4xx_drivers.elf  "stm32f4xx_drivers.bin"
 Finished building: stm32f4xx_drivers.bin
  
 
-15:12:26 Build Finished. 0 errors, 38 warnings. (took 2s.263ms)
+13:06:07 Build Finished. 0 errors, 41 warnings. (took 3s.175ms)
 

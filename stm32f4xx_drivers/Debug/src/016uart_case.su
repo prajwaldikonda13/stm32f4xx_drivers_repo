@@ -1,7 +1,0 @@
-../src/016uart_case.c:31:6:USART2_Init	48	static
-../src/016uart_case.c:43:7:USART2_GPIOInit	16	static
-../src/016uart_case.c:62:6:GPIO_ButtonInit	24	static
-../src/016uart_case.c:89:6:delay	16	static
-../src/016uart_case.c:93:5:main	64	static
-../src/016uart_case.c:153:6:USART2_IRQHandler	48	static
-../src/016uart_case.c:162:6:USART_ApplicationEventCallback	8	static

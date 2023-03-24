@@ -48,13 +48,15 @@ typedef struct
 /*
  * Clock control Macros for GPIOx peripheral.
  */
-#define GPIOx_PCLK_CTRL(GPIOx,BITPOS,STATE)    	MODIFY_BIT_N(RCC_ptr->AHB1ENR,GPIOx-50)
+#define GPIOx_PCLK_CTRL(GPIOx,STATE)    	RCC_AHB1_PER_CLK_CTRL(GPIOx-50,STATE)
+
+
 
 
 /*
  *  Macros to reset GPIOx peripheral.
  */
-#define GPIOx_REG_RESET(GPIOx)    	SET_BIT_N(RCC_ptr->AHB1RSTR,GPIOx-50);RST_BIT_N(RCC_ptr->AHB1RSTR,GPIOx-50)
+#define GPIOx_REG_RESET(GPIOx)    	RCC_AHB1_PER_RST(GPIOx-50)
 
 
 

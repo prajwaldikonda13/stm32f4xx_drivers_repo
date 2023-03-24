@@ -74,3 +74,33 @@ C Model Exception: C Model Status [Element stm32f407xx_spi_driver.c does not exi
 	at org.eclipse.jface.text.reconciler.AbstractReconciler$BackgroundThread.run(AbstractReconciler.java:207)
 !SUBENTRY 1 org.eclipse.cdt.core 4 969 2023-03-22 14:46:55.095
 !MESSAGE Element stm32f407xx_spi_driver.c does not exist.
+!SESSION 2023-03-23 20:42:29.663 -----------------------------------------------
+eclipse.buildId=Version 1.12.0
+java.version=11.0.17
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2023-03-23 20:43:06.227
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2023-03-23 20:43:06.236
+!MESSAGE Log4j2 initialized with config file C:\Users\Prajwal Dikonda\Desktop\STM32 Projects\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2023-03-23 20:43:24.876
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2023-03-24 12:12:35.390 -----------------------------------------------
+eclipse.buildId=Version 1.12.0
+java.version=11.0.17
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2023-03-24 12:13:01.633
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2023-03-24 12:13:01.653
+!MESSAGE Log4j2 initialized with config file C:\Users\Prajwal Dikonda\Desktop\STM32 Projects\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2023-03-24 12:13:12.800
+!MESSAGE Started RMI Server, listening on port 41337

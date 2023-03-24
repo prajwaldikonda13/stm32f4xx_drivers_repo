@@ -9,12 +9,13 @@
 /*
  * Clock Enable Macros for USARTx peripherals
  */
-#define USART1_PCCK_EN() (RCC_ptr->APB2ENR |= (1 << 4))
-#define USART2_PCCK_EN() (RCC_ptr->APB1ENR |= (1 << 17))
-#define USART3_PCCK_EN() (RCC_ptr->APB1ENR |= (1 << 18))
-#define UART4_PCCK_EN()  (RCC_ptr->APB1ENR |= (1 << 19))
-#define UART5_PCCK_EN()  (RCC_ptr->APB1ENR |= (1 << 20))
-#define USART6_PCCK_EN() (RCC_ptr->APB1ENR |= (1 << 5))
+#define USART1_PCCK_EN() 								RCC_APB2_PER_CLK_CTRL(4,ENABLE)
+
+#define USART2_PCCK_EN() 								RCC_APB1_PER_CLK_CTRL(17,ENABLE)
+#define USART3_PCCK_EN() 								RCC_APB1_PER_CLK_CTRL(18,ENABLE)
+#define UART4_PCCK_EN()  								RCC_APB1_PER_CLK_CTRL(19,ENABLE)
+#define UART5_PCCK_EN()  								RCC_APB1_PER_CLK_CTRL(20,ENABLE)
+#define USART6_PCCK_EN() 								RCC_APB1_PER_CLK_CTRL(5,ENABLE)
 
 /*
  * Configuration structure for USARTx peripheral

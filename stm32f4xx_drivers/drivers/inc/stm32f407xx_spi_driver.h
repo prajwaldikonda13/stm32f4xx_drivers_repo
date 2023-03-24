@@ -1,10 +1,3 @@
-/*
- * stm32f407xx_spi_driver.h
- *
- *  Created on: Feb 9, 2019
- *      Author: admin
- */
-
 #ifndef INC_STM32F407XX_SPI_DRIVER_H_
 #define INC_STM32F407XX_SPI_DRIVER_H_
 
@@ -16,16 +9,22 @@
 /*
  * Clock Enable Macros for SPIx peripheralsbu
  */
-#define SPI1_PCLK_EN() (RCC_ptr->APB2ENR |= (1 << 12))
-#define SPI2_PCLK_EN() (RCC_ptr->APB1ENR |= (1 << 14))
-#define SPI3_PCLK_EN() (RCC_ptr->APB1ENR |= (1 << 15))
-#define SPI4_PCLK_EN() (RCC_ptr->APB2ENR |= (1 << 13))
+
+#define RCC_APB2_PER_CLK_CTRL(BITPOS,STATE)
+#define SPIx_PCLK_CTRL(SPIx,STATE) RCC_APB2_PER_CLK_CTRL(BITPOS,STATE)
+
+#define 	SPI2_PCLK_EN()				RCC_APB1_PER_CLK_CTRL(14,ENABLE)
+#define 	SPI3_PCLK_EN()				RCC_APB1_PER_CLK_CTRL(15,ENABLE)
+
+#define 	SPI1_PCLK_EN()				RCC_APB2_PER_CLK_CTRL(12,ENABLE)
+#define 	SPI4_PCLK_EN()				RCC_APB2_PER_CLK_CTRL(13,ENABLE)
+
+
 
 /*
  *  Configuration structure for SPIx peripheral
  */
-typedef struct
-{
+typedef struct {
 	uint8_t SPI_DeviceMode;
 	uint8_t SPI_BusConfig;
 	uint8_t SPI_SclkSpeed;
@@ -33,24 +32,21 @@ typedef struct
 	uint8_t SPI_CPOL;
 	uint8_t SPI_CPHA;
 	uint8_t SPI_SSM;
-}SPI_Config_t;
-
+} SPI_Config_t;
 
 /*
  *Handle structure for SPIx peripheral
  */
-typedef struct
-{
-	uint8_t 	  	SPIx;   /*!< This holds the base address of SPIx(x:0,1,2) peripheral >*/
-	SPI_Config_t 	SPIConfig;
-	uint8_t 		*pTxBuffer; /* !< To store the app. Tx buffer address > */
-	uint8_t 		*pRxBuffer;	/* !< To store the app. Rx buffer address > */
-	uint32_t 		TxLen;		/* !< To store Tx len > */
-	uint32_t 		RxLen;		/* !< To store Tx len > */
-	uint8_t 		TxState;	/* !< To store Tx state > */
-	uint8_t 		RxState;	/* !< To store Rx state > */
-}SPI_Handle_t;
-
+typedef struct {
+	uint8_t SPIx; /*!< This holds the base address of SPIx(x:0,1,2) peripheral >*/
+	SPI_Config_t SPIConfig;
+	uint8_t *pTxBuffer; /* !< To store the app. Tx buffer address > */
+	uint8_t *pRxBuffer; /* !< To store the app. Rx buffer address > */
+	uint32_t TxLen; /* !< To store Tx len > */
+	uint32_t RxLen; /* !< To store Tx len > */
+	uint8_t TxState; /* !< To store Tx state > */
+	uint8_t RxState; /* !< To store Rx state > */
+} SPI_Handle_t;
 
 /*
  * SPI application states
@@ -67,14 +63,11 @@ typedef struct
 #define SPI_EVENT_OVR_ERR    3
 #define SPI_EVENT_CRC_ERR    4
 
-
-
 /*
  * @SPI_DeviceMode
  */
 #define SPI_DEVICE_MODE_MASTER    1
 #define SPI_DEVICE_MODE_SLAVE     0
-
 
 /*
  * @SPI_BusConfig
@@ -119,15 +112,12 @@ typedef struct
 #define SPI_SSM_EN     1
 #define SPI_SSM_DI     0
 
-
 /*
  * SPI related status flags definitions
  */
 #define SPI_TXE_FLAG    ( 1 << SPI_SR_TXE)
 #define SPI_RXNE_FLAG   ( 1 << SPI_SR_RXNE)
 #define SPI_BUSY_FLAG   ( 1 << SPI_SR_BSY)
-
-
 
 /******************************************************************************************
  *								APIs supported by this driver
@@ -144,15 +134,15 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t EnorDi);
 void SPI_Init(SPI_Handle_t SPIHandle);
 void SPI_DeInit(uint8_t SPIx);
 
-
 /*
  * Data Send and Receive
  */
-void SPI_SendData(uint8_t SPIx,uint8_t *pTxBuffer, uint32_t Len);
+void SPI_SendData(uint8_t SPIx, uint8_t *pTxBuffer, uint32_t Len);
 void SPI_ReceiveData(uint8_t SPIx, uint8_t *pRxBuffer, uint32_t Len);
 
-uint8_t SPI_SendDataIT(SPI_Handle_t SPIHandle,uint8_t *pTxBuffer, uint32_t Len);
-uint8_t SPI_ReceiveDataIT(SPI_Handle_t SPIHandle, uint8_t *pRxBuffer, uint32_t Len);
+uint8_t SPI_SendDataIT(SPI_Handle_t SPIHandle, uint8_t *pTxBuffer, uint32_t Len);
+uint8_t SPI_ReceiveDataIT(SPI_Handle_t SPIHandle, uint8_t *pRxBuffer,
+		uint32_t Len);
 
 /*
  * IRQ Configuration and ISR handling
@@ -167,7 +157,7 @@ void SPI_IRQHandling(SPI_Handle_t Handle);
 void SPI_PeripheralControl(uint8_t SPIx, uint8_t EnOrDi);
 void SPI_SSIConfig(uint8_t SPIx, uint8_t EnOrDi);
 void SPI_SSOEConfig(uint8_t SPIx, uint8_t EnOrDi);
-uint8_t SPI_GetFlagStatus(uint8_t SPIx , uint32_t FlagName);
+uint8_t SPI_GetFlagStatus(uint8_t SPIx, uint32_t FlagName);
 void SPI_ClearOVRFlag(uint8_t SPIx);
 void SPI_CloseTransmisson(SPI_Handle_t SPIHandle);
 void SPI_CloseReception(SPI_Handle_t SPIHandle);
@@ -176,6 +166,6 @@ uint8_t I2C_DeviceMode(uint8_t I2Cx);
 /*
  * Application callback
  */
-void SPI_ApplicationEventCallback(SPI_Handle_t SPIHandle,uint8_t AppEv);
+void SPI_ApplicationEventCallback(SPI_Handle_t SPIHandle, uint8_t AppEv);
 
 #endif /* INC_STM32F407XX_SPI_DRIVER_H_ */

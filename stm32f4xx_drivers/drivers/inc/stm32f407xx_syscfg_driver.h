@@ -23,7 +23,7 @@ typedef struct
 /*
  * Clock Enable Macros for SYSCFG peripheral
  */
-#define SYSCFG_PCLK_EN() RCC_APB1_PER_CLK_CTRL(14,ENABLE)
+#define SYSCFG_PCLK_EN() 			RCC_APB1_PER_CLK_CTRL(14,ENABLE)
 //#define SYSCFG_PCLK_EN() (RCC_ptr->APB2ENR |= (1 << 14))
 
 

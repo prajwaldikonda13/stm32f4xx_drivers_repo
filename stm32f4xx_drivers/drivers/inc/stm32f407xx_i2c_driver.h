@@ -16,10 +16,7 @@
 /*
  * Clock Enable Macros for I2Cx peripherals
  */
-#define I2Cx_PCLK_CTRL(I2Cx,STATE) (RCC_p->APB1ENR |= (1 << 21))
-#define I2C1_PCLK_EN() (RCC_ptr->APB1ENR |= (1 << 21))
-#define I2C2_PCLK_EN() (RCC_ptr->APB1ENR |= (1 << 22))
-#define I2C3_PCLK_EN() (RCC_ptr->APB1ENR |= (1 << 23))
+#define I2Cx_PCLK_CTRL(I2Cx,STATE) RCC_APB1_PER_CLK_CTRL(I2Cx,STATE)
 
 /*
  * Configuration structure for I2Cx peripheral
@@ -157,9 +154,9 @@ void I2C_ER_IRQHandling(I2C_Handle_t I2CHandle);
 /*
  * Other Peripheral Control APIs
  */
-void I2C_PeripheralControl(uint8_t I2Cx, uint8_t EnOrDi);
+void I2C_PeripheralControl(uint8_t I2Cx, uint8_t Status);
 uint8_t I2C_GetFlagStatus(uint8_t I2Cx , uint32_t FlagName);
-void I2C_ManageAcking(uint8_t I2Cx, uint8_t EnorDi);
+void I2C_ManageAcking(uint8_t I2Cx, uint8_t Status);
 void I2C_GenerateStopCondition(uint8_t I2Cx);
 
 void I2C_SlaveEnableDisableCallbackEvents(uint8_t I2Cx,uint8_t EnorDi);

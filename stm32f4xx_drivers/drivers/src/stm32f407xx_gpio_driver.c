@@ -5,7 +5,7 @@
 void GPIO_Init(GPIO_Handle_t GPIOHandle) {
 	//enable the peripheral clock
 
-	RCC_AHB1_PER_CLK_CTRL(GPIOHandle.GPIOx, ENABLE);
+	GPIOx_PCLK_CTRL(GPIOHandle.GPIOx, ENABLE);
 
 	//1 . configure the mode of gpio pin
 

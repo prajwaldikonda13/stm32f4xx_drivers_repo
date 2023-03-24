@@ -4,7 +4,6 @@
 
 #include"stdio.h"
 
-#define __vo volatile
 #define __weak __attribute__((weak))
 
 
@@ -127,9 +126,9 @@ enum Peripherals_en {
 	WWDG, //11
 	IWDG, //12
 	I2S2EXT, //13
-	SPI2,
+	SPI2,//14
 	I2S2=14, //14
-	SPI3,
+	SPI3,//15
 	I2S3=15, //15
 	I2S3EXT, //16
 	USART2, //17
@@ -153,8 +152,8 @@ enum Peripherals_en {
 	USART1, //35
 	USART6, //36
 	RESERVED6, //37
-	ADC1,
-	ADC2=38,
+	ADC1,//38
+	ADC2=38,//38
 	ADC3=38, //38
 	RESERVED7, //39
 	SDIO, //40
@@ -363,15 +362,15 @@ enum IRQx_x_en
  */
 typedef struct
 {
-	__vo uint32_t CR1;        /*!< TODO,     										Address offset: 0x00 */
-	__vo uint32_t CR2;        /*!< TODO,     										Address offset: 0x04 */
-	__vo uint32_t SR;         /*!< TODO,     										Address offset: 0x08 */
-	__vo uint32_t DR;         /*!< TODO,     										Address offset: 0x0C */
-	__vo uint32_t CRCPR;      /*!< TODO,     										Address offset: 0x10 */
-	__vo uint32_t RXCRCR;     /*!< TODO,     										Address offset: 0x14 */
-	__vo uint32_t TXCRCR;     /*!< TODO,     										Address offset: 0x18 */
-	__vo uint32_t I2SCFGR;    /*!< TODO,     										Address offset: 0x1C */
-	__vo uint32_t I2SPR;      /*!< TODO,     										Address offset: 0x20 */
+	vuint32_t CR1;        /*!< TODO,     										Address offset: 0x00 */
+	vuint32_t CR2;        /*!< TODO,     										Address offset: 0x04 */
+	vuint32_t SR;         /*!< TODO,     										Address offset: 0x08 */
+	vuint32_t DR;         /*!< TODO,     										Address offset: 0x0C */
+	vuint32_t CRCPR;      /*!< TODO,     										Address offset: 0x10 */
+	vuint32_t RXCRCR;     /*!< TODO,     										Address offset: 0x14 */
+	vuint32_t TXCRCR;     /*!< TODO,     										Address offset: 0x18 */
+	vuint32_t I2SCFGR;    /*!< TODO,     										Address offset: 0x1C */
+	vuint32_t I2SPR;      /*!< TODO,     										Address offset: 0x20 */
 } SPI_RegDef_t;
 
 
@@ -383,16 +382,16 @@ typedef struct
  */
 typedef struct
 {
-  __vo uint32_t CR1;        /*!< TODO,     										Address offset: 0x00 */
-  __vo uint32_t CR2;        /*!< TODO,     										Address offset: 0x04 */
-  __vo uint32_t OAR1;       /*!< TODO,     										Address offset: 0x08 */
-  __vo uint32_t OAR2;       /*!< TODO,     										Address offset: 0x0C */
-  __vo uint32_t DR;         /*!< TODO,     										Address offset: 0x10 */
-  __vo uint32_t SR1;        /*!< TODO,     										Address offset: 0x14 */
-  __vo uint32_t SR2;        /*!< TODO,     										Address offset: 0x18 */
-  __vo uint32_t CCR;        /*!< TODO,     										Address offset: 0x1C */
-  __vo uint32_t TRISE;      /*!< TODO,     										Address offset: 0x20 */
-  __vo uint32_t FLTR;       /*!< TODO,     										Address offset: 0x24 */
+  vuint32_t CR1;        /*!< TODO,     										Address offset: 0x00 */
+  vuint32_t CR2;        /*!< TODO,     										Address offset: 0x04 */
+  vuint32_t OAR1;       /*!< TODO,     										Address offset: 0x08 */
+  vuint32_t OAR2;       /*!< TODO,     										Address offset: 0x0C */
+  vuint32_t DR;         /*!< TODO,     										Address offset: 0x10 */
+  vuint32_t SR1;        /*!< TODO,     										Address offset: 0x14 */
+  vuint32_t SR2;        /*!< TODO,     										Address offset: 0x18 */
+  vuint32_t CCR;        /*!< TODO,     										Address offset: 0x1C */
+  vuint32_t TRISE;      /*!< TODO,     										Address offset: 0x20 */
+  vuint32_t FLTR;       /*!< TODO,     										Address offset: 0x24 */
 }I2C_RegDef_t;
 
 /*
@@ -400,13 +399,13 @@ typedef struct
  */
 typedef struct
 {
-	__vo uint32_t SR;         /*!< TODO,     										Address offset: 0x00 */
-	__vo uint32_t DR;         /*!< TODO,     										Address offset: 0x04 */
-	__vo uint32_t BRR;        /*!< TODO,     										Address offset: 0x08 */
-	__vo uint32_t CR1;        /*!< TODO,     										Address offset: 0x0C */
-	__vo uint32_t CR2;        /*!< TODO,     										Address offset: 0x10 */
-	__vo uint32_t CR3;        /*!< TODO,     										Address offset: 0x14 */
-	__vo uint32_t GTPR;       /*!< TODO,     										Address offset: 0x18 */
+	vuint32_t SR;         /*!< TODO,     										Address offset: 0x00 */
+	vuint32_t DR;         /*!< TODO,     										Address offset: 0x04 */
+	vuint32_t BRR;        /*!< TODO,     										Address offset: 0x08 */
+	vuint32_t CR1;        /*!< TODO,     										Address offset: 0x0C */
+	vuint32_t CR2;        /*!< TODO,     										Address offset: 0x10 */
+	vuint32_t CR3;        /*!< TODO,     										Address offset: 0x14 */
+	vuint32_t GTPR;       /*!< TODO,     										Address offset: 0x18 */
 } USART_RegDef_t;
 
 
