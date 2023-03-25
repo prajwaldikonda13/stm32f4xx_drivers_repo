@@ -439,8 +439,11 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 	}
 
 	void SPI_ClearOVRFlag(uint8_t SPIx) {
-		SPIx_ptr(SPIx)->DR;
-		SPIx_ptr(SPIx)->SR;
+		uint8_t temp;
+		temp = SPIx_ptr(SPIx)->DR;
+		temp = SPIx_ptr(SPIx)->SR;
+		(void) temp;
+
 	}
 
 	__weak void SPI_ApplicationEventCallback(SPI_Handle_t SPIHandle,

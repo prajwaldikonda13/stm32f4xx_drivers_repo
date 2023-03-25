@@ -6,6 +6,20 @@
 
 #define SPIx_ptr(SPIx)			((SPI_RegDef_t*)BASE_ADDR_LST[SPIx])
 
+/*
+ * Clock Enable Macros for SPIx peripheralsbu
+ */
+
+#define RCC_APB2_PER_CLK_CTRL(BITPOS,STATE)
+#define SPIx_PCLK_CTRL(SPIx,STATE) RCC_APB2_PER_CLK_CTRL(BITPOS,STATE)
+
+#define 	SPI2_PCLK_EN()				RCC_APB1_PER_CLK_CTRL(14,ENABLE)
+#define 	SPI3_PCLK_EN()				RCC_APB1_PER_CLK_CTRL(15,ENABLE)
+
+#define 	SPI1_PCLK_EN()				RCC_APB2_PER_CLK_CTRL(12,ENABLE)
+#define 	SPI4_PCLK_EN()				RCC_APB2_PER_CLK_CTRL(13,ENABLE)
+
+
 
 /*
  *  Configuration structure for SPIx peripheral

@@ -52,8 +52,8 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 		uint32_t tempreg = 0;
 
 		//1. configure the device mode
-		MODIFY_BIT_N(SPI_ptr(SPIHandle.SPIx)->CR1, SPI_CR1_MSTR,
-				SPIHandle.SPIConfig.SPI_DeviceMode);
+	 	MODIFY_BIT_N(SPI_ptr(SPIHandle.SPIx)->CR1,SPI_CR1_MSTR,SPIHandle.SPIConfig.SPI_DeviceMode);
+
 
 		//2. Configure the bus config
 		if (SPIHandle.SPIConfig.SPI_BusConfig == SPI_BUS_CONFIG_FD) {
@@ -61,33 +61,31 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 			CLR_BIT_N(SPI_ptr(SPIHandle.SPIx)->CR1,SPI_CR1_BIDIMODE);
 		} else if (SPIHandle.SPIConfig.SPI_BusConfig == SPI_BUS_CONFIG_HD) {
 			//bidi mode should be set
-			SET_BIT_N(SPI_ptr(SPIHandle.SPIx)->CR1, SPI_CR1_BIDIMODE);
+			SET_BIT_N(SPI_ptr(SPIHandle.SPIx)->CR1,SPI_CR1_BIDIMODE);
 		} else if (SPIHandle.SPIConfig.SPI_BusConfig
 				== SPI_BUS_CONFIG_SIMPLEX_RXONLY) {
 			//BIDI mode should be cleared
 			CLR_BIT_N(SPI_ptr(SPIHandle.SPIx)->CR1,SPI_CR1_BIDIMODE);
 			//RXONLY bit must be set
-			SET_BIT_N(SPI_ptr(SPIHandle.SPIx)->CR1, SPI_CR1_RXONLY);
+			SET_BIT_N(SPI_ptr(SPIHandle.SPIx)->CR1,SPI_CR1_RXONLY);
 		}
 
 		// 3. Configure the spi serial clock speed (baud rate)
-		MODIFY_KBITS(SPI_ptr(SPIHandle.SPIx)->CR1, 3, SPI_CR1_BR,
-				SPIHandle.SPIConfig.SPI_SclkSpeed);
+		MODIFY_KBITS(SPI_ptr(SPIHandle.SPIx)->CR1,3,SPI_CR1_BR,SPIHandle.SPIConfig.SPI_SclkSpeed);
 
 		//4.  Configure the DFF
-		MODIFY_BIT_N(SPI_ptr(SPIHandle.SPIx)->CR1, SPI_CR1_DFF,
-				SPIHandle.SPIConfig.SPI_DFF);
+		MODIFY_BIT_N(SPI_ptr(SPIHandle.SPIx)->CR1,SPI_CR1_DFF,SPIHandle.SPIConfig.SPI_DFF);
 
 		//5. configure the CPOL
-		MODIFY_BIT_N(SPI_ptr(SPIHandle.SPIx)->CR1, SPI_CR1_CPOL,
-				SPIHandle.SPIConfig.SPI_CPOL);
+		MODIFY_BIT_N(SPI_ptr(SPIHandle.SPIx)->CR1,SPI_CR1_CPOL,SPIHandle.SPIConfig.SPI_CPOL);
 
 		//6 . configure the CPHA
-		MODIFY_BIT_N(SPI_ptr(SPIHandle.SPIx)->CR1, SPI_CR1_CPHA,
-				SPIHandle.SPIConfig.SPI_CPHA);
+		tempreg |= SPIHandle.SPIConfig.SPI_CPHA << SPI_CR1_CPHA;
 
-		MODIFY_BIT_N(SPI_ptr(SPIHandle.SPIx)->CR1, SPI_CR1_SSM,
-				SPIHandle.SPIConfig.SPI_SSM);
+		tempreg |= SPIHandle.SPIConfig.SPI_SSM << SPI_CR1_SSM;
+
+		SPIx_ptr(SPIHandle.SPIx)->CR1 = tempreg;
+
 	}
 
 	/*********************************************************************
@@ -132,12 +130,11 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 	void SPI_SendData(uint8_t SPIx, uint8_t *pTxBuffer, uint32_t Len) {
 		while (Len > 0) {
 			//1. wait until TXE is set
-			while (!GET_BIT_N(SPIx_ptr(SPIx)->SR, SPI_SR_TXE))
+			while (SPI_GetFlagStatus(SPIx, SPI_TXE_FLAG) == FLAG_RESET)
 				;
 
 			//2. check the DFF bit in CR1
-
-			if (GET_BIT_N(SPIx_ptr(SPIx)->CR1, SPI_CR1_DFF)) {
+			if ((SPIx_ptr(SPIx)->CR1 & (1 << SPI_CR1_DFF))) {
 				//16 bit DFF
 				//1. load the data in to the DR
 				SPIx_ptr(SPIx)->DR = *((uint16_t*) pTxBuffer);
@@ -171,12 +168,12 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 	void SPI_ReceiveData(uint8_t SPIx, uint8_t *pRxBuffer, uint32_t Len) {
 		while (Len > 0) {
 			//1. wait until RXNE is set
-
-			while (!GET_BIT_N(SPIx_ptr(SPIx)->SR, SPI_SR_RXNE))
+			while (SPI_GetFlagStatus(SPIx, SPI_RXNE_FLAG)
+					== (uint8_t) FLAG_RESET)
 				;
 
 			//2. check the DFF bit in CR1
-			if (GET_BIT_N(SPIx_ptr(SPIx)->CR1, SPI_CR1_DFF)) {
+			if ((SPIx_ptr(SPIx)->CR1 & (1 << SPI_CR1_DFF))) {
 				//16 bit DFF
 				//1. load the data from DR to Rxbuffer address
 				*((uint16_t*) pRxBuffer) = SPIx_ptr(SPIx)->DR;
@@ -243,8 +240,13 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 	 * @Note              -
 
 	 */
-	void SPI_SSOEConfig(uint8_t SPIx, uint8_t State) {
-		MODIFY_BIT_N(SPIx_ptr(SPIx)->CR2, SPI_CR2_SSOE, State);
+	void SPI_SSOEConfig(uint8_t SPIx, uint8_t EnOrDi) {
+		if (EnOrDi == ENABLE) {
+			SPIx_ptr(SPIx)->CR2 |= (1 << SPI_CR2_SSOE);
+		} else {
+			SPIx_ptr(SPIx)->CR2 &= ~(1 << SPI_CR2_SSOE);
+		}
+
 	}
 
 	/*********************************************************************
@@ -262,7 +264,42 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 
 	 */
 	void SPI_IRQInterruptConfig(uint8_t IRQNumber, uint8_t EnorDi) {
-		NVIC_INTR_CTRL(IRQNumber, State);
+
+//	if(EnorDi == ENABLE)
+//	{
+//		if(IRQNumber <= 31)
+//		{
+//			//program ISER0 register
+//			*NVIC_ISER0 |= ( 1 << IRQNumber );
+//
+//		}else if(IRQNumber > 31 && IRQNumber < 64 ) //32 to 63
+//		{
+//			//program ISER1 register
+//			*NVIC_ISER1 |= ( 1 << (IRQNumber % 32) );
+//		}
+//		else if(IRQNumber >= 64 && IRQNumber < 96 )
+//		{
+//			//program ISER2 register //64 to 95
+//			*NVIC_ISER3 |= ( 1 << (IRQNumber % 64) );
+//		}
+//	}else
+//	{
+//		if(IRQNumber <= 31)
+//		{
+//			//program ICER0 register
+//			*NVIC_ICER0 |= ( 1 << IRQNumber );
+//		}else if(IRQNumber > 31 && IRQNumber < 64 )
+//		{
+//			//program ICER1 register
+//			*NVIC_ICER1 |= ( 1 << (IRQNumber % 32) );
+//		}
+//		else if(IRQNumber >= 6 && IRQNumber < 96 )
+//		{
+//			//program ICER2 register
+//			*NVIC_ICER3 |= ( 1 << (IRQNumber % 64) );
+//		}
+//	}
+
 	}
 
 	/*********************************************************************
@@ -280,7 +317,14 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 
 	 */
 	void SPI_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority) {
-		NVIC_INTR_PR_CTRL(IRQNumber, IRQPriority);
+		//1. first lets find out the ipr register
+//	uint8_t iprx = IRQNumber / 4;
+//	uint8_t iprx_section  = IRQNumber %4 ;
+//
+//	uint8_t shift_amount = ( 8 * iprx_section) + ( 8 - NO_PR_BITS_IMPLEMENTED) ;
+//
+//	*(  NVIC_PR_BASE_ADDR + iprx ) |=  ( IRQPriority << shift_amount );
+
 	}
 
 	uint8_t SPI_SendDataIT(SPI_Handle_t SPIHandle, uint8_t *pTxBuffer,
@@ -296,7 +340,7 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 			SPIHandle.TxState = SPI_BUSY_IN_TX;
 
 			//3. Enable the TXEIE control bit to get interrupt whenever TXE flag is set in SR
-			SET_BIT_N(SPIx_ptr(SPIHandle.SPIx)->CR2,SPI_CR2_TXEIE);
+			SPIx_ptr(SPIHandle.SPIx)->CR2 |= (1 << SPI_CR2_TXEIE);
 
 		}
 
@@ -316,7 +360,7 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 			SPIHandle.RxState = SPI_BUSY_IN_RX;
 
 			//3. Enable the RXNEIE control bit to get interrupt whenever RXNEIE flag is set in SR
-			SET_BIT_N(SPIx_ptr(SPIHandle.SPIx)->CR2,SPI_CR2_RXNEIE);
+			SPIx_ptr(SPIHandle.SPIx)->CR2 |= (1 << SPI_CR2_RXNEIE);
 
 		}
 
@@ -360,7 +404,7 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 
 	static void spi_txe_interrupt_handle(SPI_Handle_t SPIHandle) {
 		// check the DFF bit in CR1
-		if (GET_BIT_N(SPIx_ptr(SPIHandle.SPIx)->CR1 ,SPI_CR1_DFF)) {
+		if ((SPIx_ptr(SPIHandle.SPIx)->CR1 & (1 << SPI_CR1_DFF))) {
 			//16 bit DFF
 			//1. load the data in to the DR
 			SPIx_ptr(SPIHandle.SPIx)->DR = *((uint16_t*) SPIHandle.pTxBuffer);
@@ -387,7 +431,7 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 
 	static void spi_rxne_interrupt_handle(SPI_Handle_t SPIHandle) {
 		//do rxing as per the dff
-		if (GET_BIT_N(SPIx_ptr(SPIHandle.SPIx)->CR1,SPI_CR1_DFF)) {
+		if (SPIx_ptr(SPIHandle.SPIx)->CR1 & (1 << 11)) {
 			//16 bit
 			*((uint16_t*) SPIHandle.pRxBuffer) =
 					(uint16_t) SPIx_ptr(SPIHandle.SPIx)->DR;
@@ -412,18 +456,20 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 
 	static void spi_ovr_err_interrupt_handle(SPI_Handle_t SPIHandle) {
 
+		uint8_t temp;
 		//1. clear the ovr flag
 		if (SPIHandle.TxState != SPI_BUSY_IN_TX) {
-			SPIx_ptr(SPIHandle.SPIx)->DR;
-			SPIx_ptr(SPIHandle.SPIx)->SR;
+			temp = SPIx_ptr(SPIHandle.SPIx)->DR;
+			temp = SPIx_ptr(SPIHandle.SPIx)->SR;
 		}
+		(void) temp;
 		//2. inform the application
 		SPI_ApplicationEventCallback(SPIHandle, SPI_EVENT_OVR_ERR);
 
 	}
 
 	void SPI_CloseTransmisson(SPI_Handle_t SPIHandle) {
-		CLR_BIT_N(SPIx_ptr(SPIHandle.SPIx)->CR2,SPI_CR2_TXEIE);
+		SPIx_ptr(SPIHandle.SPIx)->CR2 &= ~(1 << SPI_CR2_TXEIE);
 		SPIHandle.pTxBuffer = NULL;
 		SPIHandle.TxLen = 0;
 		SPIHandle.TxState = SPI_READY;
@@ -431,7 +477,7 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 	}
 
 	void SPI_CloseReception(SPI_Handle_t SPIHandle) {
-		CLR_BIT_N(SPIx_ptr(SPIHandle.SPIx)->CR2,SPI_CR2_RXNEIE);
+		SPIx_ptr(SPIHandle.SPIx)->CR2 &= ~(1 << SPI_CR2_RXNEIE);
 		SPIHandle.pRxBuffer = NULL;
 		SPIHandle.RxLen = 0;
 		SPIHandle.RxState = SPI_READY;
@@ -439,8 +485,11 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 	}
 
 	void SPI_ClearOVRFlag(uint8_t SPIx) {
-		SPIx_ptr(SPIx)->DR;
-		SPIx_ptr(SPIx)->SR;
+		uint8_t temp;
+		temp = SPIx_ptr(SPIx)->DR;
+		temp = SPIx_ptr(SPIx)->SR;
+		(void) temp;
+
 	}
 
 	__weak void SPI_ApplicationEventCallback(SPI_Handle_t SPIHandle,

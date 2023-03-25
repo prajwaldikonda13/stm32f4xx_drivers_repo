@@ -296,7 +296,7 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 			SPIHandle.TxState = SPI_BUSY_IN_TX;
 
 			//3. Enable the TXEIE control bit to get interrupt whenever TXE flag is set in SR
-			SET_BIT_N(SPIx_ptr(SPIHandle.SPIx)->CR2,SPI_CR2_TXEIE);
+			SPIx_ptr(SPIHandle.SPIx)->CR2 |= (1 << SPI_CR2_TXEIE);
 
 		}
 
@@ -316,7 +316,7 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 			SPIHandle.RxState = SPI_BUSY_IN_RX;
 
 			//3. Enable the RXNEIE control bit to get interrupt whenever RXNEIE flag is set in SR
-			SET_BIT_N(SPIx_ptr(SPIHandle.SPIx)->CR2,SPI_CR2_RXNEIE);
+			SPIx_ptr(SPIHandle.SPIx)->CR2 |= (1 << SPI_CR2_RXNEIE);
 
 		}
 
@@ -360,7 +360,7 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 
 	static void spi_txe_interrupt_handle(SPI_Handle_t SPIHandle) {
 		// check the DFF bit in CR1
-		if (GET_BIT_N(SPIx_ptr(SPIHandle.SPIx)->CR1 ,SPI_CR1_DFF)) {
+		if ((SPIx_ptr(SPIHandle.SPIx)->CR1 & (1 << SPI_CR1_DFF))) {
 			//16 bit DFF
 			//1. load the data in to the DR
 			SPIx_ptr(SPIHandle.SPIx)->DR = *((uint16_t*) SPIHandle.pTxBuffer);
@@ -387,7 +387,7 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 
 	static void spi_rxne_interrupt_handle(SPI_Handle_t SPIHandle) {
 		//do rxing as per the dff
-		if (GET_BIT_N(SPIx_ptr(SPIHandle.SPIx)->CR1,SPI_CR1_DFF)) {
+		if (SPIx_ptr(SPIHandle.SPIx)->CR1 & (1 << 11)) {
 			//16 bit
 			*((uint16_t*) SPIHandle.pRxBuffer) =
 					(uint16_t) SPIx_ptr(SPIHandle.SPIx)->DR;
@@ -412,18 +412,20 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 
 	static void spi_ovr_err_interrupt_handle(SPI_Handle_t SPIHandle) {
 
+		uint8_t temp;
 		//1. clear the ovr flag
 		if (SPIHandle.TxState != SPI_BUSY_IN_TX) {
-			SPIx_ptr(SPIHandle.SPIx)->DR;
-			SPIx_ptr(SPIHandle.SPIx)->SR;
+			temp = SPIx_ptr(SPIHandle.SPIx)->DR;
+			temp = SPIx_ptr(SPIHandle.SPIx)->SR;
 		}
+		(void) temp;
 		//2. inform the application
 		SPI_ApplicationEventCallback(SPIHandle, SPI_EVENT_OVR_ERR);
 
 	}
 
 	void SPI_CloseTransmisson(SPI_Handle_t SPIHandle) {
-		CLR_BIT_N(SPIx_ptr(SPIHandle.SPIx)->CR2,SPI_CR2_TXEIE);
+		SPIx_ptr(SPIHandle.SPIx)->CR2 &= ~(1 << SPI_CR2_TXEIE);
 		SPIHandle.pTxBuffer = NULL;
 		SPIHandle.TxLen = 0;
 		SPIHandle.TxState = SPI_READY;
@@ -431,7 +433,7 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 	}
 
 	void SPI_CloseReception(SPI_Handle_t SPIHandle) {
-		CLR_BIT_N(SPIx_ptr(SPIHandle.SPIx)->CR2,SPI_CR2_RXNEIE);
+		SPIx_ptr(SPIHandle.SPIx)->CR2 &= ~(1 << SPI_CR2_RXNEIE);
 		SPIHandle.pRxBuffer = NULL;
 		SPIHandle.RxLen = 0;
 		SPIHandle.RxState = SPI_READY;
@@ -439,8 +441,11 @@ void SPI_PeriClockControl(uint8_t SPIx, uint8_t State) {
 	}
 
 	void SPI_ClearOVRFlag(uint8_t SPIx) {
-		SPIx_ptr(SPIx)->DR;
-		SPIx_ptr(SPIx)->SR;
+		uint8_t temp;
+		temp = SPIx_ptr(SPIx)->DR;
+		temp = SPIx_ptr(SPIx)->SR;
+		(void) temp;
+
 	}
 
 	__weak void SPI_ApplicationEventCallback(SPI_Handle_t SPIHandle,
