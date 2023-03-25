@@ -1,0 +1,219 @@
+#include "stm32f407xx_gpio_driver.h"
+#include"stm32f407xx_nvic_driver.h"
+
+
+void GPIO_Init(GPIO_Handle_t GPIOHandle) {
+	//enable the peripheral clock
+
+	RCC_AHB1_PER_CLK_CTRL(GPIOHandle.GPIOx-50,ENABLE);
+
+	//1 . configure the mode of gpio pin
+
+	if (GPIOHandle.GPIO_PinConfig.GPIO_PinMode <= GPIO_MODE_ANALOG) {
+		//the non interrupt mode
+		MODIFY_KBITS(GPIOx_ptr(GPIOHandle.GPIOx)->MODER, 2,MUL2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,1),
+				GPIOHandle.GPIO_PinConfig.GPIO_PinMode); //setting
+
+	} else {
+		//Interrupt mode
+		EXTI_INTR_EDGE_CONFIG(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber, GPIOHandle.GPIO_PinConfig.GPIO_PinMode-4);
+		SYSCFG_PCLK_EN();
+		SYSCFG_EXTI_CNFG(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber);
+		//3 . enable the exti interrupt delivery using IMR
+		EXTI_MASK_CTRL(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber, ENABLE);
+	}
+
+	//2. configure the speed
+
+	MODIFY_KBITS(GPIOx_ptr(GPIOHandle.GPIOx)->OSPEEDR, 2,
+			MUL2PK (GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,1),
+			GPIOHandle.GPIO_PinConfig.GPIO_PinSpeed);
+
+	//3. configure the pupd settings
+
+	MODIFY_KBITS(GPIOx_ptr(GPIOHandle.GPIOx)->PUPDR, 2,
+			MUL2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,1),
+			GPIOHandle.GPIO_PinConfig.GPIO_PinPuPdControl);
+
+	//4. configure the optype
+	MODIFY_KBITS(GPIOx_ptr(GPIOHandle.GPIOx)->OTYPER, 2,
+			GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,
+			GPIOHandle.GPIO_PinConfig.GPIO_PinOPType);
+
+	//5. configure the alt functionality
+	if (GPIOHandle.GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_ALTFN) {
+		//configure the alt function registers.
+		MODIFY_KBITS(
+				GPIOx_ptr(GPIOHandle.GPIOx)->AFR[DIV2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,3)],
+				4, MOD2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,3),
+				(GPIOHandle.GPIO_PinConfig.GPIO_PinAltFunMode << MUL2PK(MOD2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,3),2)));
+
+	}
+
+}
+
+/*********************************************************************
+ * @fn      		  - GPIO_DeInit
+ *
+ * @brief             -
+ *
+ * @param[in]         -
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -
+ *
+ * @Note              -
+
+ */
+void GPIO_DeInit(uint8_t GPIOx) {
+	GPIOx_REG_RESET(GPIOx);
+}
+
+/*********************************************************************
+ * @fn      		  - GPIO_ReadFromInputPin
+ *
+ * @brief             -
+ *
+ * @param[in]         -
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -   0 or 1
+ *
+ * @Note              -
+
+ */
+uint8_t GPIO_ReadFromInputPin(uint8_t GPIOx, uint8_t PinNumber) {
+	return (uint8_t) GET_BIT_N(GPIOx_ptr(GPIOx)->IDR, PinNumber);
+}
+
+/*********************************************************************
+ * @fn      		  - GPIO_ReadFromInputPort
+ *
+ * @brief             -
+ *
+ * @param[in]         -
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -
+ *
+ * @Note              -
+
+ */
+uint16_t GPIO_ReadFromInputPort(uint8_t GPIOx) {
+	return (uint16_t) GPIOx_ptr(GPIOx)->IDR;;
+}
+
+/*********************************************************************
+ * @fn      		  - GPIO_WriteToOutputPin
+ *
+ * @brief             -
+ *
+ * @param[in]         -
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -
+ *
+ * @Note              -
+
+ */
+void GPIO_WriteToOutputPin(uint8_t GPIOx, uint8_t PinNumber, uint8_t Value) {
+	MODIFY_BIT_N(GPIOx_ptr(GPIOx)->ODR, PinNumber, Value);
+}
+
+/*********************************************************************
+ * @fn      		  - GPIO_WriteToOutputPort
+ *
+ * @brief             -
+ *
+ * @param[in]         -
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -
+ *
+ * @Note              -
+
+ */
+void GPIO_WriteToOutputPort(uint8_t GPIOx, uint16_t Value) {
+	GPIOx_ptr(GPIOx)->ODR = Value;
+}
+
+/*********************************************************************
+ * @fn      		  - GPIO_ToggleOutputPin
+ *
+ * @brief             -
+ *
+ * @param[in]         -
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -
+ *
+ * @Note              -
+
+ */
+void GPIO_ToggleOutputPin(uint8_t GPIOx, uint8_t PinNumber) {
+	TGL_BIT_N(GPIOx_ptr(GPIOx)->ODR, PinNumber);
+}
+
+/*********************************************************************
+ * @fn      		  - GPIO_IRQConfig
+ *
+ * @brief             -
+ *
+ * @param[in]         -
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -
+ *
+ * @Note              -
+
+ */
+void GPIO_IRQInterruptConfig(uint8_t GPIOPinx, uint8_t State) {
+	NVIC_INTR_CTRL(EXTIx_IRQx_MAPPING[GPIOPinx],State);
+}
+
+/*********************************************************************
+ * @fn      		  - SPI_IRQPriorityConfig
+ *
+ * @brief             -
+ *
+ * @param[in]         -
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -
+ *
+ * @Note              -
+
+ */
+void GPIO_IRQPriorityConfig(uint8_t GPIOPinx, uint32_t IRQPriority) {
+	NVIC_INTR_CTRL(EXTIx_IRQx_MAPPING[GPIOPinx],IRQPriority);
+}
+/*********************************************************************
+ * @fn      		  - GPIO_IRQHandling
+ *
+ * @brief             -
+ *
+ * @param[in]         -
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -
+ *
+ * @Note              -
+
+ */
+void GPIO_IRQHandling(uint8_t PinNumber) {
+//clear the exti pr register corresponding to the pin number
+	if (EXTI_INTR_PR_STATUS(PinNumber)) {
+		//clear
+		EXTI_INTR_PR_CLR(PinNumber);
+	}
+
+}

@@ -45,10 +45,6 @@ typedef struct
 }GPIO_Handle_t;
 
 
-/*
- * Clock control Macros for GPIOx peripheral.
- */
-#define GPIOx_PCLK_CTRL(GPIOx,STATE)    	RCC_AHB1_PER_CLK_CTRL(GPIOx-50,STATE)
 
 
 
@@ -124,10 +120,6 @@ typedef struct
  *		 For more information about the APIs check the function definitions
  ******************************************************************************************/
 
-/*
- * Peripheral Clock setup
- */
-void GPIO_PeriClockControl(uint8_t GPIOx, uint8_t State);
 
 /*
  * Init and De-init
@@ -145,7 +137,12 @@ void GPIO_WriteToOutputPin(uint8_t GPIOx, uint8_t PinNumber, uint8_t Value);
 void GPIO_WriteToOutputPort(uint8_t GPIOx, uint16_t Value);
 void GPIO_ToggleOutputPin(uint8_t GPIOx, uint8_t PinNumber);
 
-
+static void GPIO_MODE_CNFG(GPIO_Handle_t GPIOHandle) ;
+static void GPIO_ALTFN_CNFG(GPIO_Handle_t GPIOHandle);
+static void GPIO_SPEED_CNFG(GPIO_Handle_t GPIOHandle);
+static void GPIO_PUPD_CNFG(GPIO_Handle_t GPIOHandle);
+static void GPIO_OTYPE_CNFG(GPIO_Handle_t GPIOHandle);
+static void GPIO_INTR_CNFG(GPIO_Handle_t GPIOHandle);
 /*
  * IRQ Configuration and ISR handling
  */

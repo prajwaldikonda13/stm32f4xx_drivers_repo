@@ -1,11 +1,3 @@
-/*
- * 010i2c_master_tx_testing.c
- *
- *  Created on: Feb 24, 2019
- *      Author: admin
- */
-
-
 #include<stdio.h>
 #include<string.h>
 #include "stm32f407xx_i2c_driver.h"

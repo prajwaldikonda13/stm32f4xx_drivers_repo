@@ -1,0 +1,39 @@
+#include "stm32f407xx_exti_driver.h"
+uint8_t EXTIx_IRQx_MAPPING[] = {
+		EXTI0_IRQx,
+		EXTI1_IRQx,
+		EXTI2_IRQx,
+		EXTI3_IRQx,
+		EXTI4_IRQx,
+		EXTI5_IRQx,
+		EXTI6_IRQx,
+		EXTI7_IRQx,
+		EXTI8_IRQx,
+		EXTI9_IRQx,
+		EXTI10_IRQx,
+		EXTI11_IRQx,
+		EXTI12_IRQx,
+		EXTI13_IRQx,
+		EXTI14_IRQx,
+		EXTI15_IRQx,
+		EXTI16_IRQx,
+		EXTI17_IRQx,
+		EXTI18_IRQx,
+		EXTI19_IRQx,
+		EXTI20_IRQx,
+		EXTI21_IRQx,
+		EXTI22_IRQx,
+};
+
+void EXTI_INTR_EDGE_CONFIG(uint8_t EXTIx,uint8_t EDGEx)
+{
+
+}
+void EXTI_INTR_EDGE_RISING_CONFIG(uint8_t EXTIx,uint8_t EDGEx)
+{
+
+}
+void EXTI_INTR_EDGE_FALLING_CONFIG(uint8_t EXTIx,uint8_t EDGEx)
+{
+
+}

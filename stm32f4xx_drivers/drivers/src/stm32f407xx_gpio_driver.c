@@ -1,76 +1,26 @@
 #include "stm32f407xx_gpio_driver.h"
 #include"stm32f407xx_nvic_driver.h"
 
-
 void GPIO_Init(GPIO_Handle_t GPIOHandle) {
 	//enable the peripheral clock
 
-	GPIOx_PCLK_CTRL(GPIOHandle.GPIOx, ENABLE);
+	RCC_AHB1_PER_CLK_CTRL(GPIOHandle.GPIOx - 50, ENABLE);
 
 	//1 . configure the mode of gpio pin
-
-	if (GPIOHandle.GPIO_PinConfig.GPIO_PinMode <= GPIO_MODE_ANALOG) {
-		//the non interrupt mode
-		MODIFY_KBITS(GPIOx_ptr(GPIOHandle.GPIOx)->MODER, 2,
-				MUL2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,1),
-				GPIOHandle.GPIO_PinConfig.GPIO_PinMode); //setting
-
-	} else {
-		if (GPIOHandle.GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_FT) {
-			//1. configure the FTSR
-			EXTI_FTSR_CTRL(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber, ENABLE);
-			//Clear the corresponding RTSR bit
-			EXTI_RTSR_CTRL(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber, DISABLE);
-
-		} else if (GPIOHandle.GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RT) {
-			//1 . configure the RTSR
-			EXTI_RTSR_CTRL(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber, ENABLE);
-			//Clear the corresponding RTSR bit
-			EXTI_FTSR_CTRL(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber, DISABLE);
-
-		} else if (GPIOHandle.GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RFT) {
-			//1. configure both FTSR and RTSR
-			EXTI_RTSR_CTRL(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber, ENABLE);
-			//Clear the corresponding RTSR bit
-			EXTI_FTSR_CTRL(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber, ENABLE);
-		}
-
-		//2. configure the GPIO port selection in SYSCFG_EXTICR
-		SYSCFG_PCLK_EN();
-		SYSCFG_EXTI_CNFG(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber);
-		//3 . enable the exti interrupt delivery using IMR
-		EXTI_MASK_CTRL(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber, ENABLE);
-	}
+	GPIO_MODE_CNFG(GPIOHandle);
 
 	//2. configure the speed
-
-	MODIFY_KBITS(GPIOx_ptr(GPIOHandle.GPIOx)->OSPEEDR, 2,
-			MUL2PK (GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,1),
-			GPIOHandle.GPIO_PinConfig.GPIO_PinSpeed);
+	GPIO_SPEED_CNFG(GPIOHandle);
 
 	//3. configure the pupd settings
-
-	MODIFY_KBITS(GPIOx_ptr(GPIOHandle.GPIOx)->PUPDR, 2,
-			MUL2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,1),
-			GPIOHandle.GPIO_PinConfig.GPIO_PinPuPdControl);
+	GPIO_PUPD_CNFG(GPIOHandle);
 
 	//4. configure the optype
-	MODIFY_KBITS(GPIOx_ptr(GPIOHandle.GPIOx)->OTYPER, 2,
-			GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,
-			GPIOHandle.GPIO_PinConfig.GPIO_PinOPType);
-
+	GPIO_OTYPE_CNFG(GPIOHandle);
 	//5. configure the alt functionality
-	if (GPIOHandle.GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_ALTFN) {
-		//configure the alt function registers.
-		MODIFY_KBITS(
-				GPIOx_ptr(GPIOHandle.GPIOx)->AFR[DIV2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,3)],
-				4, MOD2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,3),
-				(GPIOHandle.GPIO_PinConfig.GPIO_PinAltFunMode << MUL2PK(MOD2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,3),2)));
-
-	}
-
+	if (GPIOHandle.GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_ALTFN)//configure the alt function registers.
+		GPIO_ALTFN_CNFG(GPIOHandle);
 }
-
 /*********************************************************************
  * @fn      		  - GPIO_DeInit
  *
@@ -88,7 +38,49 @@ void GPIO_Init(GPIO_Handle_t GPIOHandle) {
 void GPIO_DeInit(uint8_t GPIOx) {
 	GPIOx_REG_RESET(GPIOx);
 }
+static void GPIO_MODE_CNFG(GPIO_Handle_t GPIOHandle) {
+	if (GPIOHandle.GPIO_PinConfig.GPIO_PinMode <= GPIO_MODE_ANALOG) {
+		//the non interrupt mode
+		MODIFY_KBITS(GPIOx_ptr(GPIOHandle.GPIOx)->MODER, 2,
+				MUL2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,1),
+				GPIOHandle.GPIO_PinConfig.GPIO_PinMode); //setting
 
+	} else {
+		//Interrupt mode
+		GPIO_INTR_CNFG(GPIOHandle);
+	}
+
+}
+static void GPIO_ALTFN_CNFG(GPIO_Handle_t GPIOHandle) {
+	MODIFY_KBITS(
+			GPIOx_ptr(GPIOHandle.GPIOx)->AFR[DIV2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,3)],
+			4, MOD2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,3),
+			(GPIOHandle.GPIO_PinConfig.GPIO_PinAltFunMode << MUL2PK(MOD2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,3),2)));
+}
+static void GPIO_SPEED_CNFG(GPIO_Handle_t GPIOHandle) {
+	MODIFY_KBITS(GPIOx_ptr(GPIOHandle.GPIOx)->OSPEEDR, 2,
+			MUL2PK (GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,1),
+			GPIOHandle.GPIO_PinConfig.GPIO_PinSpeed);
+}
+static void GPIO_PUPD_CNFG(GPIO_Handle_t GPIOHandle) {
+	MODIFY_KBITS(GPIOx_ptr(GPIOHandle.GPIOx)->PUPDR, 2,
+			MUL2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,1),
+			GPIOHandle.GPIO_PinConfig.GPIO_PinPuPdControl);
+
+}
+static void GPIO_OTYPE_CNFG(GPIO_Handle_t GPIOHandle) {
+	MODIFY_KBITS(GPIOx_ptr(GPIOHandle.GPIOx)->OTYPER, 2,
+			GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,
+			GPIOHandle.GPIO_PinConfig.GPIO_PinOPType);
+}
+static void GPIO_INTR_CNFG(GPIO_Handle_t GPIOHandle) {
+	EXTI_INTR_EDGE_CONFIG(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,
+			GPIOHandle.GPIO_PinConfig.GPIO_PinMode - 4);
+	SYSCFG_PCLK_EN();
+	SYSCFG_EXTI_CNFG(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber);
+	//3 . enable the exti interrupt delivery using IMR
+	EXTI_MASK_CTRL(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber, ENABLE);
+}
 /*********************************************************************
  * @fn      		  - GPIO_ReadFromInputPin
  *
@@ -194,7 +186,7 @@ void GPIO_ToggleOutputPin(uint8_t GPIOx, uint8_t PinNumber) {
 
  */
 void GPIO_IRQInterruptConfig(uint8_t GPIOPinx, uint8_t State) {
-	NVIC_INTR_CTRL(EXTIx_IRQx_MAPPING[GPIOPinx],State);
+	NVIC_INTR_CTRL(EXTIx_IRQx_MAPPING[GPIOPinx], State);
 }
 
 /*********************************************************************
@@ -212,7 +204,7 @@ void GPIO_IRQInterruptConfig(uint8_t GPIOPinx, uint8_t State) {
 
  */
 void GPIO_IRQPriorityConfig(uint8_t GPIOPinx, uint32_t IRQPriority) {
-	NVIC_INTR_CTRL(EXTIx_IRQx_MAPPING[GPIOPinx],IRQPriority);
+	NVIC_INTR_CTRL(EXTIx_IRQx_MAPPING[GPIOPinx], IRQPriority);
 }
 /*********************************************************************
  * @fn      		  - GPIO_IRQHandling

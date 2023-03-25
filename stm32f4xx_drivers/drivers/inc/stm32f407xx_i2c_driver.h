@@ -1,22 +1,13 @@
-/*
- * stm32f407xx_i2c_driver.h
- *
- *  Created on: Feb 20, 2019
- *      Author: admin
- */
 
 #ifndef INC_STM32F407XX_I2C_DRIVER_H_
 #define INC_STM32F407XX_I2C_DRIVER_H_
 
 #include "stm32f407xx.h"
 #include"stm32f407xx_rcc_driver.h"
-
+#include"stm32f407xx_nvic_driver.h"
 
 #define I2Cx_ptr(I2Cx)			((I2C_RegDef_t*)BASE_ADDR_LST[I2Cx])
-/*
- * Clock Enable Macros for I2Cx peripherals
- */
-#define I2Cx_PCLK_CTRL(I2Cx,STATE) RCC_APB1_PER_CLK_CTRL(I2Cx,STATE)
+
 
 /*
  * Configuration structure for I2Cx peripheral
@@ -48,6 +39,13 @@ typedef struct
 }I2C_Handle_t;
 
 
+
+
+#define I2C_CR1_ACK				10
+#define I2C_OAR_ADDR			1
+
+
+
 /*
  * I2C application states
  */
@@ -69,6 +67,8 @@ typedef struct
 #define I2C_ACK_ENABLE        1
 #define I2C_ACK_DISABLE       0
 
+#define I2C_CCR_F_S				15
+#define I2C_CCR_DUTY			14
 
 /*
  * @I2C_FMDutyCycle
@@ -159,8 +159,25 @@ uint8_t I2C_GetFlagStatus(uint8_t I2Cx , uint32_t FlagName);
 void I2C_ManageAcking(uint8_t I2Cx, uint8_t Status);
 void I2C_GenerateStopCondition(uint8_t I2Cx);
 
-void I2C_SlaveEnableDisableCallbackEvents(uint8_t I2Cx,uint8_t EnorDi);
 
+static void  I2C_GenerateStartCondition(uint8_t I2Cx);
+static void I2C_ExecuteAddressPhase(uint8_t I2Cx, uint8_t SlaveAddr,uint8_t RnW);
+static void I2C_ADDR_MstrClear(I2C_Handle_t I2CHandle);
+static void I2C_ADDR_SlvClear(I2C_Handle_t I2CHandle);
+
+
+
+
+static void ConfigureCCRVal(I2C_Handle_t I2CHandle);
+static void ConfigureTRISEVal(I2C_Handle_t I2CHandle);
+
+
+
+static void I2C_MasterHandleRXNEInterrupt(I2C_Handle_t I2CHandle );
+static void I2C_MasterHandleTXEInterrupt(I2C_Handle_t I2CHandle );
+
+void I2C_SlaveEnableDisableCallbackEvents(uint8_t I2Cx,uint8_t EnorDi);
+static uint8_t GetLSBSetBit(uint32_t Val);
 /*
  * Application callback
  */
