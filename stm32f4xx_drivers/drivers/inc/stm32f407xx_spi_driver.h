@@ -3,7 +3,7 @@
 
 #include "stm32f407xx.h"
 #include"stm32f407xx_rcc_driver.h"
-
+#include"stm32f407xx_nvic_driver.h"
 #define SPIx_ptr(SPIx)			((SPI_RegDef_t*)BASE_ADDR_LST[SPIx])
 
 
@@ -148,7 +148,7 @@ void SPI_ClearOVRFlag(uint8_t SPIx);
 void SPI_CloseTransmisson(SPI_Handle_t SPIHandle);
 void SPI_CloseReception(SPI_Handle_t SPIHandle);
 uint8_t I2C_DeviceMode(uint8_t I2Cx);
-
+static void SPI_Init_Bus_Config(SPI_Handle_t SPIHandle);
 /*
  * Application callback
  */

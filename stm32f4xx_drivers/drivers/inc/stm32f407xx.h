@@ -13,6 +13,10 @@ typedef volatile unsigned short int vuint16_t;
 typedef volatile unsigned char vuint8_t;
 
 
+
+
+uint8_t GetLSBSetBit(uint32_t Val);
+
 /*
  * base addresses of peripherals
  */
@@ -333,6 +337,7 @@ enum IRQx_x_en
 
 #define GET_KBITS(ADDR,K,POS)			((ADDR)>>(POS))&(MASK_LST[K-1])
 #define RST_KBITS(ADDR,K,POS)			((ADDR)&=~(MASK_LST[K-1]<<(POS)))
+#define SET_KBITS(ADDR,K,POS)			((ADDR)|=(MASK_LST[K-1]<<(POS)))
 
 #define MODIFY_BIT_N(ADDR,N,VAL)	VAL==0?RST_BIT_N(ADDR,N):SET_BIT_N(ADDR,N)
 #define MODIFY_KBITS(ADDR,K,POS,VAL)	RST_KBITS(ADDR,K,POS);(ADDR)|=((VAL)<<(POS))

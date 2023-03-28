@@ -130,3 +130,9 @@ uint32_t MASK_LST[]={
 
 
 };
+uint8_t GetLSBSetBit(uint32_t Val) {
+	uint8_t pos = 0;
+	while (!(Val & 1))
+		pos++;
+	return pos;
+}

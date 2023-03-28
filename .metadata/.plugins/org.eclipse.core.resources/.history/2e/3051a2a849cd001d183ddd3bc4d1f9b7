@@ -1,0 +1,70 @@
+
+
+#include "stm32f407xx_rcc_driver.h"
+
+uint16_t AHB_PreScaler[8] = { 2, 4, 8, 16, 64, 128, 256, 512 };
+uint8_t APB1_PreScaler[4] = { 2, 4, 8, 16 };
+
+uint32_t RCC_GetPCLK1Value(void) {
+	uint32_t pclk1, SystemClk;
+
+	uint8_t clksrc, temp, ahbp, apb1p;
+	uint32_t sysclkArr[] = { 16000000, 8000000, 0 };
+		sysclkArr[2] = RCC_GetPLLOutputClock();
+
+	//for ahb
+	temp = GET_KBITS(RCC_ptr->CFGR, 4, RCC_CFGR_HPRE);
+
+	temp < 8 ? (ahbp = 1) : (ahbp = AHB_PreScaler[temp - 8]);//Get AHB1 prescalar
+
+	//apb1
+	temp = GET_KBITS(RCC_ptr->CFGR, 3, RCC_CFGR_PRE1);//Get APB1 prescalar
+
+	temp < 4 ? (apb1p = 1) : (apb1p = APB1_PreScaler[temp - 4]);
+
+	pclk1 = (sysclkArr[GET_KBITS(RCC_ptr->CFGR, 2, RCC_CFGR_SWS0)] / ahbp)
+			/ apb1p;
+
+	return pclk1;
+}
+
+/*********************************************************************
+ * @fn      		  - RCC_GetPCLK2Value
+ *
+ * @brief             -
+ *
+ * @param[in]         -
+ * @param[in]         -
+ * @param[in]         -
+ *
+ * @return            -
+ *
+ * @Note              -
+
+ */
+uint32_t RCC_GetPCLK2Value(void) {
+	uint32_t tmp, pclk2;
+
+	uint8_t ahbp, apb2p;
+	uint32_t sysclkArr[] = { 16000000, 8000000, 0 };
+	sysclkArr[2] = RCC_GetPLLOutputClock();
+
+	tmp = GET_KBITS(RCC_ptr->CFGR, 4, RCC_CFGR_HPRE);
+
+	tmp < 8 ? (ahbp = 1) : (ahbp = AHB_PreScaler[tmp - 8]); //Get AHB1 prescalar
+
+	tmp = GET_KBITS(RCC_ptr->CFGR, 3, RCC_CFGR_PRE2);
+
+	tmp < 4 ? (apb2p = 1) : (apb2p = APB1_PreScaler[tmp - 4]); //Get APB1 prescalar
+
+	pclk2 = (sysclkArr[GET_KBITS(RCC_ptr->CFGR, 2, RCC_CFGR_SWS0)] / ahbp)
+			/ apb2p;
+
+	return pclk2;
+}
+
+uint32_t RCC_GetPLLOutputClock() {
+
+	return 0;
+}
+

@@ -177,7 +177,7 @@ static void I2C_MasterHandleRXNEInterrupt(I2C_Handle_t I2CHandle );
 static void I2C_MasterHandleTXEInterrupt(I2C_Handle_t I2CHandle );
 
 void I2C_SlaveEnableDisableCallbackEvents(uint8_t I2Cx,uint8_t EnorDi);
-static uint8_t GetLSBSetBit(uint32_t Val);
+
 /*
  * Application callback
  */

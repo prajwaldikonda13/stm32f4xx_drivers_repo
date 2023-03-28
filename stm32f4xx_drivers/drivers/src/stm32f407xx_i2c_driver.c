@@ -646,12 +646,7 @@ void I2C_EV_IRQHandling(I2C_Handle_t I2CHandle) {
 	};
 	fptr[GetLSBSetBit(I2Cx_ptr(I2CHandle.I2Cx)->SR1)](I2CHandle);
 }
-static uint8_t GetLSBSetBit(uint32_t Val) {
-	uint8_t pos = 0;
-	while (!(Val & 1))
-		pos++;
-	return pos;
-}
+
 
 void I2C_ER_IRQHandling(I2C_Handle_t I2CHandle) {
 	I2C_EV_IRQHandling(I2CHandle);

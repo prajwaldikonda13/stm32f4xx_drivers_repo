@@ -1,14 +1,16 @@
-/*
- * stm32f407xx_rcc_driver.h
- *
- *  Created on: Mar 29, 2019
- *      Author: admin
- */
+
 
 #ifndef INC_STM32F407XX_RCC_DRIVER_H_
 #define INC_STM32F407XX_RCC_DRIVER_H_
 
 #include "stm32f407xx.h"
+
+
+
+#define RCC_CFGR_SWS0		2
+#define RCC_CFGR_HPRE		4
+#define RCC_CFGR_PRE1		10
+#define RCC_CFGR_PRE2		13
 
 /*
  * peripheral register definition structure for RCC

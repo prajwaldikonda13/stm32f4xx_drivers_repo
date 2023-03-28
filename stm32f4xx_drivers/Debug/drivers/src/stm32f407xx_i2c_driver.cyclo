@@ -38,5 +38,4 @@ stm32f407xx_i2c_driver.c:618:6:I2C_SlaveSendData	1
 stm32f407xx_i2c_driver.c:622:9:I2C_SlaveReceiveData	1
 stm32f407xx_i2c_driver.c:625:13:I2C_NULL_EV	1
 stm32f407xx_i2c_driver.c:628:6:I2C_EV_IRQHandling	1
-stm32f407xx_i2c_driver.c:649:16:GetLSBSetBit	2
-stm32f407xx_i2c_driver.c:656:6:I2C_ER_IRQHandling	1
+stm32f407xx_i2c_driver.c:651:6:I2C_ER_IRQHandling	1

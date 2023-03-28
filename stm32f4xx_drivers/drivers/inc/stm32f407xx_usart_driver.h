@@ -9,13 +9,13 @@
 /*
  * Clock Enable Macros for USARTx peripherals
  */
-#define USART1_PCCK_EN() 								RCC_APB2_PER_CLK_CTRL(4,ENABLE)
+#define USART1_PCCK_CTRL(STATE) 								RCC_APB2_PER_CLK_CTRL(4,STATE)
 
-#define USART2_PCCK_EN() 								RCC_APB1_PER_CLK_CTRL(17,ENABLE)
-#define USART3_PCCK_EN() 								RCC_APB1_PER_CLK_CTRL(18,ENABLE)
-#define UART4_PCCK_EN()  								RCC_APB1_PER_CLK_CTRL(19,ENABLE)
-#define UART5_PCCK_EN()  								RCC_APB1_PER_CLK_CTRL(20,ENABLE)
-#define USART6_PCCK_EN() 								RCC_APB1_PER_CLK_CTRL(5,ENABLE)
+#define USART2_PCCK_CTRL(STATE) 								RCC_APB1_PER_CLK_CTRL(17,STATE)
+#define USART3_PCCK_CTRL(STATE) 								RCC_APB1_PER_CLK_CTRL(18,STATE)
+#define UART4_PCCK_CTRL(STATE)  								RCC_APB1_PER_CLK_CTRL(19,STATE)
+#define UART5_PCCK_CTRL(STATE)  								RCC_APB1_PER_CLK_CTRL(20,STATE)
+#define USART6_PCCK_CTRL(STATE) 								RCC_APB1_PER_CLK_CTRL(5,STATE)
 
 /*
  * Configuration structure for USARTx peripheral
@@ -52,6 +52,7 @@ typedef struct
  *@USART_Mode
  *Possible options for USART_Mode
  */
+
 #define USART_MODE_ONLY_TX 	0
 #define USART_MODE_ONLY_RX 	1
 #define USART_MODE_TXRX  	2
@@ -104,8 +105,8 @@ typedef struct
  *Possible options for USART_HWFlowControl
  */
 #define USART_HW_FLOW_CTRL_NONE    	0
-#define USART_HW_FLOW_CTRL_CTS    	1
-#define USART_HW_FLOW_CTRL_RTS    	2
+#define USART_HW_FLOW_CTRL_RTS    	1
+#define USART_HW_FLOW_CTRL_CTS    	2
 #define USART_HW_FLOW_CTRL_CTS_RTS	3
 
 
@@ -174,8 +175,9 @@ uint8_t USART_GetFlagStatus(uint8_t USARTx, uint8_t StatusFlagName);
 void USART_ClearFlag(uint8_t USARTx, uint16_t StatusFlagName);
 void USART_PeripheralControl(uint8_t USARTx, uint8_t EnOrDi);
 void USART_SetBaudRate(uint8_t USARTx, uint32_t BaudRate);
-
-
+static void USART_Init_ModeConfig(USART_Handle_t USARTHandle);
+static void USART_Init_ParityConfig(USART_Handle_t USARTHandle);
+static void USART_Init_HWFlowCtrlConfig(USART_Handle_t USARTHandle);
 /*
  * Application Callbacks
  */
