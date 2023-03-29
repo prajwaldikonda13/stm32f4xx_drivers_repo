@@ -1,15 +1,22 @@
 #include "stm32f407xx_i2c_driver.h"
-
-static void I2C_GenerateStartCondition(uint8_t I2Cx) {
+ void  I2C_GenerateStartCondition(uint8_t I2Cx);
+ void I2C_ExecuteAddressPhase(uint8_t I2Cx, uint8_t SlaveAddr,uint8_t RnW);
+ void I2C_ADDR_MstrClear(I2C_Handle_t I2CHandle);
+ void I2C_ADDR_SlvClear(I2C_Handle_t I2CHandle);
+ void ConfigureCCRVal(I2C_Handle_t I2CHandle);
+ void ConfigureTRISEVal(I2C_Handle_t I2CHandle);
+ void I2C_MasterHandleRXNEInterrupt(I2C_Handle_t I2CHandle );
+ void I2C_MasterHandleTXEInterrupt(I2C_Handle_t I2CHandle );
+ void I2C_GenerateStartCondition(uint8_t I2Cx) {
 	SET_BIT_N(I2Cx_ptr(I2Cx)->CR1, I2C_CR1_START);
 }
 
-static void I2C_ExecuteAddressPhase(uint8_t I2Cx, uint8_t SlaveAddr,
+ void I2C_ExecuteAddressPhase(uint8_t I2Cx, uint8_t SlaveAddr,
 		uint8_t RnW) {
 	I2Cx_ptr(I2Cx)->DR = (SlaveAddr << 1) | (RnW & 1); //We need only one bit value,so we take LSB only.
 }
 
-static void I2C_SB_EV(I2C_Handle_t I2CHandle) {
+ void I2C_SB_EV(I2C_Handle_t I2CHandle) {
 	//The interrupt is generated because of SB event
 	//This block will not be executed in slave mode because for slave SB is always zero
 	//In this block lets executed the address phase
@@ -23,12 +30,12 @@ static void I2C_SB_EV(I2C_Handle_t I2CHandle) {
 
 }
 
-static void I2C_ADDR_EV(I2C_Handle_t I2CHandle) {
+ void I2C_ADDR_EV(I2C_Handle_t I2CHandle) {
 	//check for device mode
 	void(*fptr[])(I2C_Handle_t)={I2C_ADDR_SlvClear,I2C_ADDR_MstrClear};
 	fptr[GET_BIT_N(I2Cx_ptr(I2CHandle.I2Cx)->SR2, I2C_SR2_MSL)](I2CHandle);
 }
-static void I2C_ADDR_MstrClear(I2C_Handle_t I2CHandle) {
+ void I2C_ADDR_MstrClear(I2C_Handle_t I2CHandle) {
 	if (I2CHandle.TxRxState == I2C_BUSY_IN_RX) {
 		if (I2CHandle.RxSize == 1) {
 			//first disable the ack
@@ -45,11 +52,11 @@ static void I2C_ADDR_MstrClear(I2C_Handle_t I2CHandle) {
 		I2Cx_ptr(I2CHandle.I2Cx)->SR2;
 	}
 }
-static void I2C_ADDR_SlvClear(I2C_Handle_t I2CHandle) {
+ void I2C_ADDR_SlvClear(I2C_Handle_t I2CHandle) {
 	I2Cx_ptr(I2CHandle.I2Cx)->SR1;
 	I2Cx_ptr(I2CHandle.I2Cx)->SR2;
 }
-static void I2C_BTF_EV(I2C_Handle_t I2CHandle) {
+ void I2C_BTF_EV(I2C_Handle_t I2CHandle) {
 	if (I2CHandle.TxRxState == I2C_BUSY_IN_TX) {
 		//make sure that TXE is also set .
 		if (GET_BIT_N(I2Cx_ptr(I2CHandle.I2Cx)->SR1, I2C_SR1_TXE)) {
@@ -71,10 +78,10 @@ static void I2C_BTF_EV(I2C_Handle_t I2CHandle) {
 		;
 	}
 }
-static void I2C_ADD10_EV() {
+ void I2C_ADD10_EV() {
 
 }
-static void I2C_STOPF_EV(I2C_Handle_t I2CHandle) {
+ void I2C_STOPF_EV(I2C_Handle_t I2CHandle) {
 	//Clear the STOPF ( i.e 1) read SR1 2) Write to CR1 )
 
 	I2Cx_ptr(I2CHandle.I2Cx)->CR1 |= 0x0000;
@@ -83,7 +90,7 @@ static void I2C_STOPF_EV(I2C_Handle_t I2CHandle) {
 	I2C_ApplicationEventCallback(I2CHandle, I2C_EV_STOP);
 }
 
-static void I2C_RXNE_EV(I2C_Handle_t I2CHandle) {
+ void I2C_RXNE_EV(I2C_Handle_t I2CHandle) {
 	//check device mode .
 
 	if (GET_BIT_N(I2Cx_ptr(I2CHandle.I2Cx)->SR2, I2C_SR2_MSL)) {
@@ -104,7 +111,7 @@ static void I2C_RXNE_EV(I2C_Handle_t I2CHandle) {
 
 }
 
-static void I2C_TXE_EV(I2C_Handle_t I2CHandle) {
+ void I2C_TXE_EV(I2C_Handle_t I2CHandle) {
 	//Check for device mode
 
 	if (GET_BIT_N(I2Cx_ptr(I2CHandle.I2Cx)->SR2, I2C_SR2_MSL)) {
@@ -124,7 +131,7 @@ static void I2C_TXE_EV(I2C_Handle_t I2CHandle) {
 
 }
 
-static void I2C_BERR_EV(I2C_Handle_t I2CHandle) {
+ void I2C_BERR_EV(I2C_Handle_t I2CHandle) {
 	//Implement the code to clear the buss error flag
 	CLR_BIT_N(I2Cx_ptr(I2CHandle.I2Cx)->SR1,I2C_SR1_BERR);
 
@@ -132,14 +139,14 @@ static void I2C_BERR_EV(I2C_Handle_t I2CHandle) {
 	I2C_ApplicationEventCallback(I2CHandle, I2C_ERROR_BERR);
 
 }
-static void I2C_ARLO_EV(I2C_Handle_t I2CHandle) {
+ void I2C_ARLO_EV(I2C_Handle_t I2CHandle) {
 	//Implement the code to clear the arbitration lost error flag
 	CLR_BIT_N(I2Cx_ptr(I2CHandle.I2Cx)->SR1,I2C_SR1_ARLO);
 
 	//Implement the code to notify the application about the error
 	I2C_ApplicationEventCallback(I2CHandle, I2C_ERROR_ARLO);
 }
-static void I2C_AF_EV(I2C_Handle_t I2CHandle) {
+ void I2C_AF_EV(I2C_Handle_t I2CHandle) {
 	//Implement the code to clear the ACK failure error flag
 	CLR_BIT_N(I2Cx_ptr(I2CHandle.I2Cx)->SR1,I2C_SR1_AF);
 
@@ -148,7 +155,7 @@ static void I2C_AF_EV(I2C_Handle_t I2CHandle) {
 
 }
 
-static void I2C_OVR_EV(I2C_Handle_t I2CHandle) {
+ void I2C_OVR_EV(I2C_Handle_t I2CHandle) {
 	//Implement the code to clear the Overrun/underrun error flag
 	CLR_BIT_N(I2Cx_ptr(I2CHandle.I2Cx)->SR1,I2C_SR1_OVR);
 
@@ -156,10 +163,10 @@ static void I2C_OVR_EV(I2C_Handle_t I2CHandle) {
 	I2C_ApplicationEventCallback(I2CHandle, I2C_ERROR_OVR);
 
 }
-static void I2C_PECERR_EV(I2C_Handle_t I2CHandle) {
+ void I2C_PECERR_EV(I2C_Handle_t I2CHandle) {
 
 }
-static void I2C_TIMEOUT_EV(I2C_Handle_t I2CHandle) {
+ void I2C_TIMEOUT_EV(I2C_Handle_t I2CHandle) {
 	//Implement the code to clear the Time out error flag
 	CLR_BIT_N(I2Cx_ptr(I2CHandle.I2Cx)->SR1,I2C_SR1_TIMEOUT);
 
@@ -167,7 +174,7 @@ static void I2C_TIMEOUT_EV(I2C_Handle_t I2CHandle) {
 	I2C_ApplicationEventCallback(I2CHandle, I2C_ERROR_TIMEOUT);
 
 }
-static void I2C_SMBALERT_EV() {
+ void I2C_SMBALERT_EV() {
 
 }
 
@@ -255,7 +262,7 @@ void I2C_Init(I2C_Handle_t I2CHandle) {
 	ConfigureTRISEVal(I2CHandle);
 
 }
-static void ConfigureCCRVal(I2C_Handle_t I2CHandle) {
+ void ConfigureCCRVal(I2C_Handle_t I2CHandle) {
 	if (I2CHandle.I2C_Config.I2C_SCLSpeed <= I2C_SCL_SPEED_SM) {
 		//mode is standard mode
 		MODIFY_KBITS(I2Cx_ptr(I2CHandle.I2Cx)->CCR, 12, 0,
@@ -274,7 +281,7 @@ static void ConfigureCCRVal(I2C_Handle_t I2CHandle) {
 		}
 	}
 }
-static void ConfigureTRISEVal(I2C_Handle_t I2CHandle) {
+ void ConfigureTRISEVal(I2C_Handle_t I2CHandle) {
 	if (I2CHandle.I2C_Config.I2C_SCLSpeed <= I2C_SCL_SPEED_SM) {
 		//mode is standard mode
 		MODIFY_KBITS(I2Cx_ptr(I2CHandle.I2Cx)->TRISE, 6, 0,
@@ -375,7 +382,7 @@ void I2C_MasterReceiveData(I2C_Handle_t I2CHandle, uint8_t *pRxBuffer,
 		I2C_ManageAcking(I2CHandle.I2Cx, I2C_ACK_DISABLE);
 
 		//clear the ADDR flag
-		I2C_ClearADDRFlag(I2CHandle);
+		I2C_ADDR_EV(I2CHandle);
 
 		//wait until  RXNE becomes 1
 		while (!GET_BIT_N(I2Cx_ptr(I2CHandle.I2Cx)->SR1, I2C_SR1_RXNE))
@@ -393,7 +400,7 @@ void I2C_MasterReceiveData(I2C_Handle_t I2CHandle, uint8_t *pRxBuffer,
 	//procedure to read data from slave when Len > 1
 	if (Len > 1) {
 		//clear the ADDR flag
-		I2C_ClearADDRFlag(I2CHandle);
+		I2C_ADDR_EV(I2CHandle);
 
 		//read the data until Len becomes zero
 		for (uint32_t i = Len; i > 0; i--) {
@@ -540,7 +547,7 @@ uint8_t I2C_MasterReceiveDataIT(I2C_Handle_t I2CHandle, uint8_t *pRxBuffer,
 	return busystate;
 }
 
-static void I2C_MasterHandleTXEInterrupt(I2C_Handle_t I2CHandle) {
+ void I2C_MasterHandleTXEInterrupt(I2C_Handle_t I2CHandle) {
 
 	if (I2CHandle.TxLen > 0) {
 		//1. load the data in to DR
@@ -556,7 +563,7 @@ static void I2C_MasterHandleTXEInterrupt(I2C_Handle_t I2CHandle) {
 
 }
 
-static void I2C_MasterHandleRXNEInterrupt(I2C_Handle_t I2CHandle) {
+ void I2C_MasterHandleRXNEInterrupt(I2C_Handle_t I2CHandle) {
 	//We have to do the data reception
 	if (I2CHandle.RxSize == 1) {
 		*I2CHandle.pRxBuffer = I2Cx_ptr(I2CHandle.I2Cx)->DR;
@@ -622,7 +629,7 @@ void I2C_SlaveSendData(uint8_t I2Cx, uint8_t data) {
 uint8_t I2C_SlaveReceiveData(uint8_t I2Cx) {
 	return (uint8_t) I2Cx_ptr(I2Cx)->DR;
 }
-static void I2C_NULL_EV(I2C_Handle_t I2CHandle) {
+ void I2C_NULL_EV(I2C_Handle_t I2CHandle) {
 
 }
 void I2C_EV_IRQHandling(I2C_Handle_t I2CHandle) {
@@ -651,4 +658,7 @@ void I2C_EV_IRQHandling(I2C_Handle_t I2CHandle) {
 void I2C_ER_IRQHandling(I2C_Handle_t I2CHandle) {
 	I2C_EV_IRQHandling(I2CHandle);
 }
+__weak void I2C_ApplicationEventCallback(I2C_Handle_t I2CHandle,uint8_t AppEv) {
 
+	//This is a weak implementation . the user application may override this function.
+}

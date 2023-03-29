@@ -137,12 +137,7 @@ void GPIO_WriteToOutputPin(uint8_t GPIOx, uint8_t PinNumber, uint8_t Value);
 void GPIO_WriteToOutputPort(uint8_t GPIOx, uint16_t Value);
 void GPIO_ToggleOutputPin(uint8_t GPIOx, uint8_t PinNumber);
 
-static void GPIO_MODE_CNFG(GPIO_Handle_t GPIOHandle) ;
-static void GPIO_ALTFN_CNFG(GPIO_Handle_t GPIOHandle);
-static void GPIO_SPEED_CNFG(GPIO_Handle_t GPIOHandle);
-static void GPIO_PUPD_CNFG(GPIO_Handle_t GPIOHandle);
-static void GPIO_OTYPE_CNFG(GPIO_Handle_t GPIOHandle);
-static void GPIO_INTR_CNFG(GPIO_Handle_t GPIOHandle);
+
 /*
  * IRQ Configuration and ISR handling
  */

@@ -3,7 +3,7 @@
 
 #include "stm32f407xx_usart_driver.h"
 #include"stm32f407xx_rcc_driver.h"
-
+#include"stm32f407xx_nvic_driver.h"
 
 #define USARTx_ptr(USARTx)			((USART_RegDef_t*)BASE_ADDR_LST[USARTx])
 /*
@@ -175,9 +175,7 @@ uint8_t USART_GetFlagStatus(uint8_t USARTx, uint8_t StatusFlagName);
 void USART_ClearFlag(uint8_t USARTx, uint16_t StatusFlagName);
 void USART_PeripheralControl(uint8_t USARTx, uint8_t EnOrDi);
 void USART_SetBaudRate(uint8_t USARTx, uint32_t BaudRate);
-static void USART_Init_ModeConfig(USART_Handle_t USARTHandle);
-static void USART_Init_ParityConfig(USART_Handle_t USARTHandle);
-static void USART_Init_HWFlowCtrlConfig(USART_Handle_t USARTHandle);
+
 /*
  * Application Callbacks
  */

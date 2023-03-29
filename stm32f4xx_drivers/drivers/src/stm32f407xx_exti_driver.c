@@ -1,4 +1,12 @@
+
+
 #include "stm32f407xx_exti_driver.h"
+
+/*Following functions should not be called from outside.So we declare prototypes here.
+ * We can even define them as static.*/
+void EXTI_INTR_EDGE_RISING_CONFIG(uint8_t EXTIx);
+void EXTI_INTR_EDGE_FALLING_CONFIG(uint8_t EXTIx) ;
+void EXTI_INTR_EDGE_BOTH_CONFIG(uint8_t EXTIx) ;
 uint8_t EXTIx_IRQx_MAPPING[] = {
 EXTI0_IRQx,
 EXTI1_IRQx,
@@ -28,18 +36,18 @@ void EXTI_INTR_EDGE_CONFIG(uint8_t EXTIx, uint8_t Edge) {
 	void(*fptr[])(uint8_t)={EXTI_INTR_EDGE_FALLING_CONFIG,EXTI_INTR_EDGE_RISING_CONFIG,EXTI_INTR_EDGE_BOTH_CONFIG};
 	fptr[Edge](EXTIx);
 }
-static void EXTI_INTR_EDGE_RISING_CONFIG(uint8_t EXTIx) {
+void EXTI_INTR_EDGE_RISING_CONFIG(uint8_t EXTIx) {
 	MODIFY_BIT_N(EXTI_ptr->RTSR, EXTIx, 1);
 	//Clear the corresponding FTSR bit
 	MODIFY_BIT_N(EXTI_ptr->FTSR, EXTIx, 0);
 
 }
-static void EXTI_INTR_EDGE_FALLING_CONFIG(uint8_t EXTIx) {
+void EXTI_INTR_EDGE_FALLING_CONFIG(uint8_t EXTIx) {
 	MODIFY_BIT_N(EXTI_ptr->FTSR, EXTIx, 1);
 	//Clear the corresponding RTSR bit
 	MODIFY_BIT_N(EXTI_ptr->RTSR, EXTIx, 0);
 }
-static void EXTI_INTR_EDGE_BOTH_CONFIG(uint8_t EXTIx) {
+void EXTI_INTR_EDGE_BOTH_CONFIG(uint8_t EXTIx) {
 	MODIFY_BIT_N(EXTI_ptr->FTSR, EXTIx, 1);
 	MODIFY_BIT_N(EXTI_ptr->RTSR, EXTIx, 1);
 }

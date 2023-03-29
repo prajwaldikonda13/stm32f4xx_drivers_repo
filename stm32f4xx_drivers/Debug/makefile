@@ -12,6 +12,7 @@ RM := rm -rf
 -include startup/subdir.mk
 -include src/subdir.mk
 -include drivers/src/subdir.mk
+-include bsp/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)

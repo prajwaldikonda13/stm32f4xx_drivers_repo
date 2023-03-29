@@ -3,6 +3,8 @@
 #include<string.h>
 
 #include "ds1307.h"
+#include "stm32f407xx_i2c_driver.h"
+#include"stm32f407xx_gpio_driver.h"
 
 
 static void ds1307_i2c_pin_config(void);
@@ -119,7 +121,7 @@ static void ds1307_i2c_pin_config(void)
 	 * I2C1_SDA ==> PB7
 	 */
 
-	i2c_sda.pGPIOx = DS1307_I2C_GPIO_PORT;
+	i2c_sda.GPIOx = DS1307_I2C_GPIO_PORT;
 	i2c_sda.GPIO_PinConfig.GPIO_PinAltFunMode = 4;
 	i2c_sda.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
 	i2c_sda.GPIO_PinConfig.GPIO_PinNumber = DS1307_I2C_SDA_PIN;
@@ -127,10 +129,10 @@ static void ds1307_i2c_pin_config(void)
 	i2c_sda.GPIO_PinConfig.GPIO_PinPuPdControl = DS1307_I2C_PUPD;
 	i2c_sda.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
 
-	GPIO_Init(&i2c_sda);
+	GPIO_Init(i2c_sda);
 
 
-	i2c_scl.pGPIOx = DS1307_I2C_GPIO_PORT;
+	i2c_scl.GPIOx = DS1307_I2C_GPIO_PORT;
 	i2c_scl.GPIO_PinConfig.GPIO_PinAltFunMode = 4;
 	i2c_scl.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_ALTFN;
 	i2c_scl.GPIO_PinConfig.GPIO_PinNumber = DS1307_I2C_SCL_PIN;
@@ -138,17 +140,17 @@ static void ds1307_i2c_pin_config(void)
 	i2c_scl.GPIO_PinConfig.GPIO_PinPuPdControl = DS1307_I2C_PUPD;
 	i2c_scl.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
 
-	GPIO_Init(&i2c_scl);
+	GPIO_Init(i2c_scl);
 
 }
 
 
 static void ds1307_i2c_config(void)
 {
-	g_ds1307I2cHandle.pI2Cx = DS1307_I2C;
+	g_ds1307I2cHandle.I2Cx = DS1307_I2C;
 	g_ds1307I2cHandle.I2C_Config.I2C_AckControl = I2C_ACK_ENABLE;
 	g_ds1307I2cHandle.I2C_Config.I2C_SCLSpeed = DS1307_I2C_SPEED;
-	I2C_Init(&g_ds1307I2cHandle);
+	I2C_Init(g_ds1307I2cHandle);
 }
 
 
@@ -157,7 +159,7 @@ static void ds1307_write(uint8_t value,uint8_t reg_addr)
 	uint8_t tx[2];
 	tx[0] = reg_addr;
 	tx[1] = value;
-	I2C_MasterSendData(&g_ds1307I2cHandle, tx, 2, DS1307_I2C_ADDRESS, 0);
+	I2C_MasterSendData(g_ds1307I2cHandle, tx, 2, DS1307_I2C_ADDRESS, 0);
 }
 
 
@@ -165,8 +167,8 @@ static void ds1307_write(uint8_t value,uint8_t reg_addr)
 static uint8_t ds1307_read(uint8_t reg_addr)
 {
 	uint8_t data;
-    I2C_MasterSendData(&g_ds1307I2cHandle, &reg_addr, 1, DS1307_I2C_ADDRESS, 0);
-    I2C_MasterReceiveData(&g_ds1307I2cHandle, &data, 1, DS1307_I2C_ADDRESS, 0);
+    I2C_MasterSendData(g_ds1307I2cHandle, &reg_addr, 1, DS1307_I2C_ADDRESS, 0);
+    I2C_MasterReceiveData(g_ds1307I2cHandle, &data, 1, DS1307_I2C_ADDRESS, 0);
 
     return data;
 }

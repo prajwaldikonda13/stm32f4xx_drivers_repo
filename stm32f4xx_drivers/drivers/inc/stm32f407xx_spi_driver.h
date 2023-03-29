@@ -148,7 +148,8 @@ void SPI_ClearOVRFlag(uint8_t SPIx);
 void SPI_CloseTransmisson(SPI_Handle_t SPIHandle);
 void SPI_CloseReception(SPI_Handle_t SPIHandle);
 uint8_t I2C_DeviceMode(uint8_t I2Cx);
-static void SPI_Init_Bus_Config(SPI_Handle_t SPIHandle);
+uint8_t SPI_GetFlagStatus(uint8_t SPIx , uint32_t FlagName);
+
 /*
  * Application callback
  */

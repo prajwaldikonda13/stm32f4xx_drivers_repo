@@ -1,6 +1,14 @@
 #include "stm32f407xx_gpio_driver.h"
 #include"stm32f407xx_nvic_driver.h"
 
+
+ void GPIO_MODE_CNFG(GPIO_Handle_t GPIOHandle) ;
+ void GPIO_ALTFN_CNFG(GPIO_Handle_t GPIOHandle);
+ void GPIO_SPEED_CNFG(GPIO_Handle_t GPIOHandle);
+ void GPIO_PUPD_CNFG(GPIO_Handle_t GPIOHandle);
+ void GPIO_OTYPE_CNFG(GPIO_Handle_t GPIOHandle);
+ void GPIO_INTR_CNFG(GPIO_Handle_t GPIOHandle);
+
 void GPIO_Init(GPIO_Handle_t GPIOHandle) {
 	//enable the peripheral clock
 
@@ -38,7 +46,7 @@ void GPIO_Init(GPIO_Handle_t GPIOHandle) {
 void GPIO_DeInit(uint8_t GPIOx) {
 	GPIOx_REG_RESET(GPIOx);
 }
-static void GPIO_MODE_CNFG(GPIO_Handle_t GPIOHandle) {
+ void GPIO_MODE_CNFG(GPIO_Handle_t GPIOHandle) {
 	if (GPIOHandle.GPIO_PinConfig.GPIO_PinMode <= GPIO_MODE_ANALOG) {
 		//the non interrupt mode
 		MODIFY_KBITS(GPIOx_ptr(GPIOHandle.GPIOx)->MODER, 2,
@@ -51,29 +59,29 @@ static void GPIO_MODE_CNFG(GPIO_Handle_t GPIOHandle) {
 	}
 
 }
-static void GPIO_ALTFN_CNFG(GPIO_Handle_t GPIOHandle) {
+ void GPIO_ALTFN_CNFG(GPIO_Handle_t GPIOHandle) {
 	MODIFY_KBITS(
 			GPIOx_ptr(GPIOHandle.GPIOx)->AFR[DIV2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,3)],
 			4, MOD2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,3),
 			(GPIOHandle.GPIO_PinConfig.GPIO_PinAltFunMode << MUL2PK(MOD2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,3),2)));
 }
-static void GPIO_SPEED_CNFG(GPIO_Handle_t GPIOHandle) {
+ void GPIO_SPEED_CNFG(GPIO_Handle_t GPIOHandle) {
 	MODIFY_KBITS(GPIOx_ptr(GPIOHandle.GPIOx)->OSPEEDR, 2,
 			MUL2PK (GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,1),
 			GPIOHandle.GPIO_PinConfig.GPIO_PinSpeed);
 }
-static void GPIO_PUPD_CNFG(GPIO_Handle_t GPIOHandle) {
+ void GPIO_PUPD_CNFG(GPIO_Handle_t GPIOHandle) {
 	MODIFY_KBITS(GPIOx_ptr(GPIOHandle.GPIOx)->PUPDR, 2,
 			MUL2PK(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,1),
 			GPIOHandle.GPIO_PinConfig.GPIO_PinPuPdControl);
 
 }
-static void GPIO_OTYPE_CNFG(GPIO_Handle_t GPIOHandle) {
+ void GPIO_OTYPE_CNFG(GPIO_Handle_t GPIOHandle) {
 	MODIFY_KBITS(GPIOx_ptr(GPIOHandle.GPIOx)->OTYPER, 2,
 			GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,
 			GPIOHandle.GPIO_PinConfig.GPIO_PinOPType);
 }
-static void GPIO_INTR_CNFG(GPIO_Handle_t GPIOHandle) {
+ void GPIO_INTR_CNFG(GPIO_Handle_t GPIOHandle) {
 	EXTI_INTR_EDGE_CONFIG(GPIOHandle.GPIO_PinConfig.GPIO_PinNumber,
 			GPIOHandle.GPIO_PinConfig.GPIO_PinMode - 4);
 	SYSCFG_PCLK_EN();

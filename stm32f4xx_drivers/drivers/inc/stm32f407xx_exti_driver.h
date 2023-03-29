@@ -61,9 +61,7 @@ typedef struct {
 extern uint8_t EXTIx_IRQx_MAPPING[];
 
 void EXTI_INTR_EDGE_CONFIG(uint8_t EXTIx, uint8_t Edge) ;
-static void EXTI_INTR_EDGE_RISING_CONFIG(uint8_t EXTIx);
-static void EXTI_INTR_EDGE_FALLING_CONFIG(uint8_t EXTIx) ;
-static void EXTI_INTR_EDGE_BOTH_CONFIG(uint8_t EXTIx) ;
+
 
 
 

@@ -160,21 +160,7 @@ void I2C_ManageAcking(uint8_t I2Cx, uint8_t Status);
 void I2C_GenerateStopCondition(uint8_t I2Cx);
 
 
-static void  I2C_GenerateStartCondition(uint8_t I2Cx);
-static void I2C_ExecuteAddressPhase(uint8_t I2Cx, uint8_t SlaveAddr,uint8_t RnW);
-static void I2C_ADDR_MstrClear(I2C_Handle_t I2CHandle);
-static void I2C_ADDR_SlvClear(I2C_Handle_t I2CHandle);
 
-
-
-
-static void ConfigureCCRVal(I2C_Handle_t I2CHandle);
-static void ConfigureTRISEVal(I2C_Handle_t I2CHandle);
-
-
-
-static void I2C_MasterHandleRXNEInterrupt(I2C_Handle_t I2CHandle );
-static void I2C_MasterHandleTXEInterrupt(I2C_Handle_t I2CHandle );
 
 void I2C_SlaveEnableDisableCallbackEvents(uint8_t I2Cx,uint8_t EnorDi);
 

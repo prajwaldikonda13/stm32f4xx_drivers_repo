@@ -80,7 +80,6 @@ void GPIO_ButtonInit(void)
 	GpioLed.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_OD;
 	GpioLed.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
 
-	GPIO_PeriClockControl(GPIOD,ENABLE);
 
 	GPIO_Init(GpioLed);
 

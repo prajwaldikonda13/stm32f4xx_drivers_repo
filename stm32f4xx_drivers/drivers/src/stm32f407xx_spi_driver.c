@@ -1,5 +1,5 @@
 #include "stm32f407xx_spi_driver.h"
-
+ void SPI_Init_Bus_Config(SPI_Handle_t SPIHandle);
 /*********************************************************************
  * @fn      		  - SPI_PeriClockControl
  *
@@ -72,7 +72,7 @@ void SPI_Init(SPI_Handle_t SPIHandle) {
 	MODIFY_BIT_N(SPIx_ptr(SPIHandle.SPIx)->CR1, SPI_CR1_SSM,
 			SPIHandle.SPIConfig.SPI_SSM);
 }
-static void SPI_Init_Bus_Config(SPI_Handle_t SPIHandle) {
+ void SPI_Init_Bus_Config(SPI_Handle_t SPIHandle) {
 	if (SPIHandle.SPIConfig.SPI_BusConfig == SPI_BUS_CONFIG_FD) {
 		//bidi mode should be cleared
 		CLR_BIT_N(SPIx_ptr(SPIHandle.SPIx)->CR1,SPI_CR1_BIDIMODE);
@@ -422,7 +422,14 @@ void SPI_ClearOVRFlag(uint8_t SPIx) {
 	SPIx_ptr(SPIx)->DR;
 	SPIx_ptr(SPIx)->SR;
 }
-
+uint8_t SPI_GetFlagStatus(uint8_t  SPIx , uint32_t FlagName)
+{
+	if(SPIx_ptr(SPIx)->SR & FlagName)
+	{
+		return FLAG_SET;
+	}
+	return FLAG_RESET;
+}
 __weak void SPI_ApplicationEventCallback(SPI_Handle_t SPIHandle, uint8_t AppEv) {
 
 	//This is a weak implementation . the user application may override this function.

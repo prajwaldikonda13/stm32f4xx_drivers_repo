@@ -94,10 +94,6 @@ char* date_to_string(RTC_date_t *rtc_date)
 
 }
 
-static void mdelay(uint32_t cnt)
-{
-	for(uint32_t i=0 ; i < (cnt * 1000); i++);
-}
 
 int main(void)
 {
